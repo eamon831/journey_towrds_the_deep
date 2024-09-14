@@ -18,6 +18,9 @@
 *.ipr
 *.iws
 .idea/
+*.apk
+*.ipa
+*.aab
 
 # Visual Studio Code related
 .classpath
