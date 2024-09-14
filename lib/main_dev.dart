@@ -13,15 +13,15 @@ Future<void> main() async {
   /// uncomment below 2 lines to set the orientation of the app
   //await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
-  final devConfig = EnvConfig(
-    appName: 'Flutter GetX Template Dev',
+  final prodConfig = EnvConfig(
+    appName: 'Flutter GetX Template Prod',
     baseUrl: 'https://api.github.com',
     shouldCollectCrashLog: true,
   );
 
   BuildConfig.instantiate(
     envType: Environment.development,
-    envConfig: devConfig,
+    envConfig: prodConfig,
   );
 
   await InitialBinding().dependencies();

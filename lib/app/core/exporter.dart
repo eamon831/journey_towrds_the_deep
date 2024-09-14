@@ -1,5 +1,5 @@
 // global export file
-export  'package:flutter/foundation.dart';
+export 'package:flutter/foundation.dart';
 export 'package:flutter/material.dart';
 export 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 export 'package:get/get.dart';

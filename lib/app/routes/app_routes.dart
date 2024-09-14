@@ -4,21 +4,9 @@ part of 'app_pages.dart';
 abstract class Routes {
   Routes._();
 
-  static const root = _Paths.root;
   static const home = _Paths.home;
-  static const favorite = _Paths.favorite;
-  static const settings = _Paths.settings;
-  static const other = _Paths.other;
-  static const projectDetails = _Paths.projectDetails;
-  static const localDbData = _Paths.localDbData;
 }
 
 abstract class _Paths {
-  static const root = '/root';
   static const home = '/home';
-  static const favorite = '/favorite';
-  static const settings = '/settings';
-  static const other = '/other';
-  static const localDbData = '/localDbData';
-  static const projectDetails = '/project-details';
 }
