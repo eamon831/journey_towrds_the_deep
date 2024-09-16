@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 
 List<Offset> _objectPositions = [];
@@ -37,17 +38,8 @@ class _ZoomableSurfaceState extends State<ZoomableSurface> {
         widget.minZoom,
         widget.maxZoom,
       );
-      final bool isZoomingIn = newScale > _scale;
-      final bool isZoomingOut = newScale < _scale;
       _scale = newScale;
       _offset = details.focalPoint - _normalizedOffset * _scale;
-
-      if (isZoomingOut) {
-        if (_scale < 1) {
-          _scale = 1;
-          _offset = Offset.zero;
-        }
-      }
 
       final double width = MediaQuery.of(context).size.width;
       final double height = MediaQuery.of(context).size.height;
@@ -103,6 +95,7 @@ class DraggableObject extends StatefulWidget {
   final bool isDragging;
   final VoidCallback onDragStart;
   final VoidCallback onDragEnd;
+  final bool Function(Offset, Offset, double) checkCollision;
 
   const DraggableObject({
     required this.position,
@@ -111,6 +104,7 @@ class DraggableObject extends StatefulWidget {
     required this.isDragging,
     required this.onDragStart,
     required this.onDragEnd,
+    required this.checkCollision,
     super.key,
   });
 
@@ -120,12 +114,14 @@ class DraggableObject extends StatefulWidget {
 
 class _DraggableObjectState extends State<DraggableObject> {
   late Offset _position;
+  late Offset _previousPosition;
   bool _isDragging = false;
 
   @override
   void initState() {
     super.initState();
     _position = widget.position;
+    _previousPosition = widget.position;
   }
 
   @override
@@ -138,6 +134,8 @@ class _DraggableObjectState extends State<DraggableObject> {
           if (!_isDragging && !widget.isDragging) {
             setState(() {
               _isDragging = true;
+              _previousPosition = _position; // Store the position when dragging starts
+              print("Drag started at: $_previousPosition"); // Debug print
             });
             widget.onDragStart();
           }
@@ -147,15 +145,37 @@ class _DraggableObjectState extends State<DraggableObject> {
             setState(() {
               _position += details.delta;
               widget.onPositionChanged(_position);
+              print("Dragging to: $_position"); // Debug print
             });
           }
         },
         onPanEnd: (details) {
           if (_isDragging) {
-            setState(() {
-              _isDragging = false;
+            print("Drag ended. Checking for collision..."); // Debug print
+            Future.delayed(Duration(milliseconds: 100), () {
+              bool hasCollision = false;
+              for (var otherPosition in _objectPositions) {
+                if (otherPosition != _position &&
+                    widget.checkCollision(_position, otherPosition, 50)) {
+                  hasCollision = true;
+                  print("Collision detected with position: $otherPosition"); // Debug print
+                  break;
+                }
+              }
+              if (hasCollision) {
+                setState(() {
+                  _position = _previousPosition; // Revert to previous position if collision
+                  widget.onPositionChanged(_position);
+                  print("Reverted to previous position: $_position"); // Debug print
+                });
+              } else {
+                print("No collision detected. Position updated: $_position"); // Debug print
+              }
+              setState(() {
+                _isDragging = false;
+              });
+              widget.onDragEnd();
             });
-            widget.onDragEnd();
           }
         },
         child: Container(
@@ -180,10 +200,16 @@ class _MyAppState extends State<MyApp> {
   bool _isDragging = false;
 
   bool _checkCollision(Offset position1, Offset position2, double size) {
-    return position1.dx < position2.dx + size &&
-        position1.dx + size > position2.dx &&
-        position1.dy < position2.dy + size &&
-        position1.dy + size > position2.dy;
+    final bool collision = _distanceBetweenPoints(position1, position2) < size;
+    if (collision) {
+      print("Collision between $position1 and $position2"); // Debug print
+    }
+    return collision;
+  }
+
+  // Function to calculate the distance between two points
+  double _distanceBetweenPoints(Offset point1, Offset point2) {
+    return sqrt(pow(point1.dx - point2.dx, 2) + pow(point1.dy - point2.dy, 2));
   }
 
   @override
@@ -202,7 +228,6 @@ class _MyAppState extends State<MyApp> {
                 ),
                 ..._objectPositions.map(
                       (position) {
-                    // Check if the current object overlaps with any other object
                     final bool isOverlapping = _objectPositions.any(
                           (otherPosition) =>
                       otherPosition != position &&
@@ -230,6 +255,7 @@ class _MyAppState extends State<MyApp> {
                           });
                         }
                       },
+                      checkCollision: _checkCollision, // Pass the function
                     );
                   },
                 ),
@@ -239,7 +265,9 @@ class _MyAppState extends State<MyApp> {
                   child: ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        _objectPositions.add(const Offset(100, 100));
+                        final newPosition = const Offset(100, 100);
+                        _objectPositions.add(newPosition);
+                        print("Added object at: $newPosition"); // Debug print
                       });
                     },
                     child: const Text('Add Object'),
