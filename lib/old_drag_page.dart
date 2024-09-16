@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'app/core/exporter.dart';
+
 List<Offset> _objectPositions = [];
 
 class ZoomableSurface extends StatefulWidget {
@@ -38,8 +40,30 @@ class _ZoomableSurfaceState extends State<ZoomableSurface> {
           widget.minZoom,
           widget.maxZoom,
         );
+        final bool isZoomingIn = newScale > _scale;
+        final bool isZoomingOut = newScale < _scale;
         _scale = newScale;
         _offset = details.focalPoint - _normalizedOffset * _scale;
+
+        // Print whether zooming in or out
+        if (isZoomingIn) {
+          if (kDebugMode) {
+            print('Zooming In');
+          }
+        } else if (isZoomingOut) {
+          if (kDebugMode) {
+            print('Zooming Out');
+            print('Scale: $_scale');
+            print('Offset: $_offset');
+          }
+
+          // Detect if the user is zooming out and the scale is less than 1
+          if (_scale < 1) {
+            // Reset the scale and offset
+            _scale = 1;
+            _offset = Offset.zero;
+          }
+        }
 
         // Ensure the offset stays within bounds
         final double width = MediaQuery.of(context).size.width;
