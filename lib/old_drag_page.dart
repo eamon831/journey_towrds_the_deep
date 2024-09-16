@@ -1,5 +1,3 @@
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 List<Offset> _objectPositions = [];
@@ -34,52 +32,36 @@ class _ZoomableSurfaceState extends State<ZoomableSurface> {
   }
 
   void _handleScaleUpdate(ScaleUpdateDetails details) {
-    setState(
-      () {
-        final double newScale = (_previousScale * details.scale).clamp(
-          widget.minZoom,
-          widget.maxZoom,
-        );
-        final bool isZoomingIn = newScale > _scale;
-        final bool isZoomingOut = newScale < _scale;
-        _scale = newScale;
-        _offset = details.focalPoint - _normalizedOffset * _scale;
+    setState(() {
+      final double newScale = (_previousScale * details.scale).clamp(
+        widget.minZoom,
+        widget.maxZoom,
+      );
+      final bool isZoomingIn = newScale > _scale;
+      final bool isZoomingOut = newScale < _scale;
+      _scale = newScale;
+      _offset = details.focalPoint - _normalizedOffset * _scale;
 
-        // Print whether zooming in or out
-        if (isZoomingIn) {
-          if (kDebugMode) {
-            print('Zooming In');
-          }
-        } else if (isZoomingOut) {
-          if (kDebugMode) {
-            print('Zooming Out');
-            print('Scale: $_scale');
-            print('Offset: $_offset');
-          }
-
-          // Detect if the user is zooming out and the scale is less than 1
-          if (_scale < 1) {
-            // Reset the scale and offset
-            _scale = 1;
-            _offset = Offset.zero;
-          }
+      if (isZoomingOut) {
+        if (_scale < 1) {
+          _scale = 1;
+          _offset = Offset.zero;
         }
+      }
 
-        // Ensure the offset stays within bounds
-        final double width = MediaQuery.of(context).size.width;
-        final double height = MediaQuery.of(context).size.height;
-        final double contentWidth = width * _scale;
-        final double contentHeight = height * _scale;
+      final double width = MediaQuery.of(context).size.width;
+      final double height = MediaQuery.of(context).size.height;
+      final double contentWidth = width * _scale;
+      final double contentHeight = height * _scale;
 
-        final double minOffsetX = -contentWidth + width;
-        final double minOffsetY = -contentHeight + height;
+      final double minOffsetX = -contentWidth + width;
+      final double minOffsetY = -contentHeight + height;
 
-        _offset = Offset(
-          _offset.dx.clamp(minOffsetX, 0),
-          _offset.dy.clamp(minOffsetY, 0),
-        );
-      },
-    );
+      _offset = Offset(
+        _offset.dx.clamp(minOffsetX, 0),
+        _offset.dy.clamp(minOffsetY, 0),
+      );
+    });
   }
 
   void _handleDoubleTap() {
@@ -98,7 +80,6 @@ class _ZoomableSurfaceState extends State<ZoomableSurface> {
       child: ClipRect(
         child: Stack(
           children: [
-            // Zoomable and pannable content
             Transform(
               transform: Matrix4.identity()
                 ..translate(_offset.dx, _offset.dy)
@@ -118,10 +99,12 @@ class _ZoomableSurfaceState extends State<ZoomableSurface> {
 class DraggableObject extends StatefulWidget {
   final Offset position;
   final ValueChanged<Offset> onPositionChanged;
+  final bool isOverlapping;
 
   const DraggableObject({
     required this.position,
     required this.onPositionChanged,
+    required this.isOverlapping,
     super.key,
   });
 
@@ -153,16 +136,12 @@ class _DraggableObjectState extends State<DraggableObject> {
         child: Container(
           width: 50,
           height: 50,
-          color: Colors.blue,
+          color: widget.isOverlapping ? Colors.red : Colors.blue,
           child: const Icon(Icons.home, color: Colors.white),
         ),
       ),
     );
   }
-}
-
-void main() {
-  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -173,6 +152,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  bool _checkCollision(Offset position1, Offset position2, double size) {
+    return position1.dx < position2.dx + size &&
+        position1.dx + size > position2.dx &&
+        position1.dy < position2.dy + size &&
+        position1.dy + size > position2.dy;
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -182,46 +168,41 @@ class _MyAppState extends State<MyApp> {
             maxZoom: 4,
             child: Stack(
               children: [
-                // Background surface
                 Container(
                   color: Colors.green,
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
                 ),
-                // Display draggable objects on the zoomable surface
                 ..._objectPositions.map(
-                  (position) => DraggableObject(
-                    position: position,
-                    onPositionChanged: (newPosition) {
-                      final int index = _objectPositions.indexOf(position);
-                      if (index != -1) {
-                        final List<Offset> newPositions =
-                            List.from(_objectPositions);
-                        newPositions[index] = newPosition;
-                        setState(() {
-                          _objectPositions = newPositions;
-                        });
-                      } else {
-                        if (kDebugMode) {
-                          print('Position not found in the list');
+                  (position) {
+                    // Check if the current object overlaps with any other object
+                    final bool isOverlapping = _objectPositions.any(
+                      (otherPosition) =>
+                          otherPosition != position &&
+                          _checkCollision(position, otherPosition, 50),
+                    );
+                    return DraggableObject(
+                      position: position,
+                      isOverlapping: isOverlapping,
+                      onPositionChanged: (newPosition) {
+                        final int index = _objectPositions.indexOf(position);
+                        if (index != -1) {
+                          setState(() {
+                            _objectPositions[index] = newPosition;
+                          });
                         }
-                      }
-                    },
-                  ),
+                      },
+                    );
+                  },
                 ),
-                // Button to add new draggable objects
                 Positioned(
                   top: 50,
                   left: 50,
                   child: ElevatedButton(
                     onPressed: () {
-                      setState(
-                        () {
-                          _objectPositions.add(
-                            const Offset(100, 100),
-                          ); // Add object at a specific position
-                        },
-                      );
+                      setState(() {
+                        _objectPositions.add(Offset(100, 100));
+                      });
                     },
                     child: const Text('Add Object'),
                   ),
@@ -233,4 +214,8 @@ class _MyAppState extends State<MyApp> {
       ),
     );
   }
+}
+
+void main() {
+  runApp(const MyApp());
 }
