@@ -21,10 +21,10 @@ class ZoomableSurface extends StatefulWidget {
 }
 
 class _ZoomableSurfaceState extends State<ZoomableSurface> {
-  double _scale = 1.0;
+  double _scale = 1;
   Offset _offset = Offset.zero;
   Offset _normalizedOffset = Offset.zero;
-  double _previousScale = 1.0;
+  double _previousScale = 1;
 
   void _handleScaleStart(ScaleStartDetails details) {
     _previousScale = _scale;
@@ -32,28 +32,30 @@ class _ZoomableSurfaceState extends State<ZoomableSurface> {
   }
 
   void _handleScaleUpdate(ScaleUpdateDetails details) {
-    setState(() {
-      final double newScale = (_previousScale * details.scale).clamp(
-        widget.minZoom,
-        widget.maxZoom,
-      );
-      _scale = newScale;
-      _offset = details.focalPoint - _normalizedOffset * _scale;
+    setState(
+      () {
+        final double newScale = (_previousScale * details.scale).clamp(
+          widget.minZoom,
+          widget.maxZoom,
+        );
+        _scale = newScale;
+        _offset = details.focalPoint - _normalizedOffset * _scale;
 
-      // Ensure the offset stays within bounds
-      final double width = MediaQuery.of(context).size.width;
-      final double height = MediaQuery.of(context).size.height;
-      final double contentWidth = width * _scale;
-      final double contentHeight = height * _scale;
+        // Ensure the offset stays within bounds
+        final double width = MediaQuery.of(context).size.width;
+        final double height = MediaQuery.of(context).size.height;
+        final double contentWidth = width * _scale;
+        final double contentHeight = height * _scale;
 
-      final double minOffsetX = -contentWidth + width;
-      final double minOffsetY = -contentHeight + height;
+        final double minOffsetX = -contentWidth + width;
+        final double minOffsetY = -contentHeight + height;
 
-      _offset = Offset(
-        _offset.dx.clamp(minOffsetX, 0),
-        _offset.dy.clamp(minOffsetY, 0),
-      );
-    });
+        _offset = Offset(
+          _offset.dx.clamp(minOffsetX, 0),
+          _offset.dy.clamp(minOffsetY, 0),
+        );
+      },
+    );
   }
 
   void _handleDoubleTap() {
@@ -164,11 +166,12 @@ class _MyAppState extends State<MyApp> {
                 ),
                 // Display draggable objects on the zoomable surface
                 ..._objectPositions.map(
-                      (position) => DraggableObject(
+                  (position) => DraggableObject(
                     position: position,
                     onPositionChanged: (newPosition) {
                       final int index = _objectPositions.indexOf(position);
-                      final List<Offset> newPositions = List.from(_objectPositions);
+                      final List<Offset> newPositions =
+                          List.from(_objectPositions);
                       newPositions[index] = newPosition;
                       setState(() {
                         _objectPositions = newPositions;
@@ -183,7 +186,8 @@ class _MyAppState extends State<MyApp> {
                   child: ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        _objectPositions.add(Offset(100, 100)); // Add object at a specific position
+                        _objectPositions.add(Offset(
+                            100, 100)); // Add object at a specific position
                       });
                     },
                     child: const Text('Add Object'),
