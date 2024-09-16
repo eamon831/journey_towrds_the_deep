@@ -185,8 +185,8 @@ class _MyAppState extends State<MyApp> {
                 // Background surface
                 Container(
                   color: Colors.green,
-                  width: 1000,
-                  height: 1000,
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
                 ),
                 // Display draggable objects on the zoomable surface
                 ..._objectPositions.map(
@@ -194,12 +194,17 @@ class _MyAppState extends State<MyApp> {
                     position: position,
                     onPositionChanged: (newPosition) {
                       final int index = _objectPositions.indexOf(position);
-                      final List<Offset> newPositions =
-                          List.from(_objectPositions);
-                      newPositions[index] = newPosition;
-                      setState(() {
-                        _objectPositions = newPositions;
-                      });
+                      if (index != -1) {
+                        final List<Offset> newPositions =
+                            List.from(_objectPositions);
+                        newPositions[index] = newPosition;
+                        setState(() {
+                          _objectPositions = newPositions;
+                        });
+                      } else {
+                        // Optionally handle the case where the position is not found
+                        print('Position not found in the list');
+                      }
                     },
                   ),
                 ),
