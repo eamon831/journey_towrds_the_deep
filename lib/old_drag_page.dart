@@ -100,11 +100,17 @@ class DraggableObject extends StatefulWidget {
   final Offset position;
   final ValueChanged<Offset> onPositionChanged;
   final bool isOverlapping;
+  final bool isDragging;
+  final VoidCallback onDragStart;
+  final VoidCallback onDragEnd;
 
   const DraggableObject({
     required this.position,
     required this.onPositionChanged,
     required this.isOverlapping,
+    required this.isDragging,
+    required this.onDragStart,
+    required this.onDragEnd,
     super.key,
   });
 
@@ -114,6 +120,7 @@ class DraggableObject extends StatefulWidget {
 
 class _DraggableObjectState extends State<DraggableObject> {
   late Offset _position;
+  bool _isDragging = false;
 
   @override
   void initState() {
@@ -127,11 +134,29 @@ class _DraggableObjectState extends State<DraggableObject> {
       left: _position.dx,
       top: _position.dy,
       child: GestureDetector(
+        onPanStart: (details) {
+          if (!_isDragging && !widget.isDragging) {
+            setState(() {
+              _isDragging = true;
+            });
+            widget.onDragStart();
+          }
+        },
         onPanUpdate: (details) {
-          setState(() {
-            _position += details.delta;
-            widget.onPositionChanged(_position);
-          });
+          if (_isDragging) {
+            setState(() {
+              _position += details.delta;
+              widget.onPositionChanged(_position);
+            });
+          }
+        },
+        onPanEnd: (details) {
+          if (_isDragging) {
+            setState(() {
+              _isDragging = false;
+            });
+            widget.onDragEnd();
+          }
         },
         child: Container(
           width: 50,
@@ -152,6 +177,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  bool _isDragging = false;
+
   bool _checkCollision(Offset position1, Offset position2, double size) {
     return position1.dx < position2.dx + size &&
         position1.dx + size > position2.dx &&
@@ -174,16 +201,27 @@ class _MyAppState extends State<MyApp> {
                   height: MediaQuery.of(context).size.height,
                 ),
                 ..._objectPositions.map(
-                  (position) {
+                      (position) {
                     // Check if the current object overlaps with any other object
                     final bool isOverlapping = _objectPositions.any(
-                      (otherPosition) =>
-                          otherPosition != position &&
+                          (otherPosition) =>
+                      otherPosition != position &&
                           _checkCollision(position, otherPosition, 50),
                     );
                     return DraggableObject(
                       position: position,
                       isOverlapping: isOverlapping,
+                      isDragging: _isDragging,
+                      onDragStart: () {
+                        setState(() {
+                          _isDragging = true;
+                        });
+                      },
+                      onDragEnd: () {
+                        setState(() {
+                          _isDragging = false;
+                        });
+                      },
                       onPositionChanged: (newPosition) {
                         final int index = _objectPositions.indexOf(position);
                         if (index != -1) {
@@ -201,7 +239,7 @@ class _MyAppState extends State<MyApp> {
                   child: ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        _objectPositions.add(Offset(100, 100));
+                        _objectPositions.add(const Offset(100, 100));
                       });
                     },
                     child: const Text('Add Object'),
