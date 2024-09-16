@@ -1,5 +1,6 @@
 
-import 'app/core/exporter.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 List<Offset> _objectPositions = [];
 
@@ -201,8 +202,9 @@ class _MyAppState extends State<MyApp> {
                           _objectPositions = newPositions;
                         });
                       } else {
-                        // Optionally handle the case where the position is not found
-                        print('Position not found in the list');
+                        if (kDebugMode) {
+                          print('Position not found in the list');
+                        }
                       }
                     },
                   ),
@@ -213,10 +215,13 @@ class _MyAppState extends State<MyApp> {
                   left: 50,
                   child: ElevatedButton(
                     onPressed: () {
-                      setState(() {
-                        _objectPositions.add(Offset(
-                            100, 100)); // Add object at a specific position
-                      });
+                      setState(
+                        () {
+                          _objectPositions.add(
+                            const Offset(100, 100),
+                          ); // Add object at a specific position
+                        },
+                      );
                     },
                     child: const Text('Add Object'),
                   ),
