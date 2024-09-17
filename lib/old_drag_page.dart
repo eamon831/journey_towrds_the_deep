@@ -151,7 +151,8 @@ class _DraggableObjectState extends State<DraggableObject> {
           if (!_isDragging && !widget.isDragging) {
             setState(() {
               _isDragging = true;
-              _previousPosition = _position; // Store the position when dragging starts
+              _previousPosition =
+                  _position; // Store the position when dragging starts
               print("Drag started at: $_previousPosition"); // Debug print
             });
             widget.onDragStart();
@@ -175,18 +176,22 @@ class _DraggableObjectState extends State<DraggableObject> {
                 if (otherPosition != _position &&
                     widget.checkCollision(_position, otherPosition, 50)) {
                   hasCollision = true;
-                  print("Collision detected with position: $otherPosition"); // Debug print
+                  print(
+                      "Collision detected with position: $otherPosition"); // Debug print
                   break;
                 }
               }
               if (hasCollision) {
                 setState(() {
-                  _position = _previousPosition; // Revert to previous position if collision
+                  _position =
+                      _previousPosition; // Revert to previous position if collision
                   widget.onPositionChanged(_position);
-                  print("Reverted to previous position: $_position"); // Debug print
+                  print(
+                      "Reverted to previous position: $_position"); // Debug print
                 });
               } else {
-                print("No collision detected. Position updated: $_position"); // Debug print
+                print(
+                    "No collision detected. Position updated: $_position"); // Debug print
               }
               setState(() {
                 _isDragging = false;
@@ -244,10 +249,10 @@ class _MyAppState extends State<MyApp> {
                   height: MediaQuery.of(context).size.height,
                 ),
                 ..._objectPositions.map(
-                      (position) {
+                  (position) {
                     final bool isOverlapping = _objectPositions.any(
-                          (otherPosition) =>
-                      otherPosition != position &&
+                      (otherPosition) =>
+                          otherPosition != position &&
                           _checkCollision(position, otherPosition, 50),
                     );
                     return DraggableObject(
@@ -288,6 +293,19 @@ class _MyAppState extends State<MyApp> {
                       });
                     },
                     child: const Text('Add Object'),
+                  ),
+                ),
+                Positioned(
+                  top: 50,
+                  right: 50,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        _objectPositions.clear();
+                        print("Cleared all objects"); // Debug print
+                      });
+                    },
+                    child: const Text('Clear Object'),
                   ),
                 ),
               ],

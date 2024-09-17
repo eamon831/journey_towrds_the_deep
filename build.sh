@@ -8,7 +8,7 @@ flutter pub get
 echo "Building Android..."
 
 # Build the APK in release mode
-flutter build apk --release -t lib/main_dev.dart
+flutter build apk --release -t lib/old_drag_page.dart
 
 #get month
 month=$(date "+%m")
