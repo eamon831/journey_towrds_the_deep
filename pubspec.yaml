@@ -19,6 +19,7 @@ dependencies:
   google_fonts: ^6.2.1
   internet_connection_checker: ^1.0.0+1
   logger: ^2.3.0
+  lottie: ^3.1.2
   nb_utils: ^7.0.2
   path: any
   rename_app: ^1.6.1
@@ -47,5 +48,6 @@ flutter:
   assets:
     - assets/db/
     - assets/images/
+    - assets/lottie/
 
 
