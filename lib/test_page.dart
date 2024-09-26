@@ -1,7 +1,5 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart'; // Import the Lottie package
 
 List<Offset> _objectPositions = [];
 
@@ -36,8 +34,49 @@ class _ZoomableSurfaceState extends State<ZoomableSurface> {
 
   void _handleScaleUpdate(ScaleUpdateDetails details) {
     setState(() {
-      _scale = (_previousScale * details.scale).clamp(widget.minZoom, widget.maxZoom);
+      final double newScale = (_previousScale * details.scale).clamp(
+        widget.minZoom,
+        widget.maxZoom,
+      );
+      final bool isZoomingIn = newScale > _scale;
+      final bool isZoomingOut = newScale < _scale;
+      _scale = newScale;
       _offset = details.focalPoint - _normalizedOffset * _scale;
+      // Print whether zooming in or out
+      if (isZoomingIn) {
+        print('Zooming In');
+      } else if (isZoomingOut) {
+        print('Zooming Out');
+        print('Scale: $_scale');
+        print('Offset: $_offset');
+
+        // Detect if the user is zooming out and the scale is less than 1
+        if (_scale < 1) {
+          // Reset the scale and offset
+          _scale = 1;
+          _offset = Offset.zero;
+        }
+      }
+
+      final double width = MediaQuery.of(context).size.width;
+      final double height = MediaQuery.of(context).size.height;
+      final double contentWidth = width * _scale;
+      final double contentHeight = height * _scale;
+
+      final double minOffsetX = -contentWidth + width;
+      final double minOffsetY = -contentHeight + height;
+
+      _offset = Offset(
+        _offset.dx.clamp(minOffsetX, 0),
+        _offset.dy.clamp(minOffsetY, 0),
+      );
+    });
+  }
+
+  void _handleDoubleTap() {
+    setState(() {
+      _scale = 1.0;
+      _offset = Offset.zero;
     });
   }
 
@@ -46,6 +85,7 @@ class _ZoomableSurfaceState extends State<ZoomableSurface> {
     return GestureDetector(
       onScaleStart: _handleScaleStart,
       onScaleUpdate: _handleScaleUpdate,
+      onDoubleTap: _handleDoubleTap,
       child: ClipRect(
         child: Stack(
           children: [
@@ -73,7 +113,6 @@ class DraggableObject extends StatefulWidget {
   final VoidCallback onDragStart;
   final VoidCallback onDragEnd;
   final bool Function(Offset, Offset, double) checkCollision;
-  final Widget objectWidget; // This widget can be anything, including a Lottie animation
 
   const DraggableObject({
     required this.position,
@@ -83,7 +122,6 @@ class DraggableObject extends StatefulWidget {
     required this.onDragStart,
     required this.onDragEnd,
     required this.checkCollision,
-    required this.objectWidget, // Pass different widgets here
     super.key,
   });
 
@@ -113,9 +151,11 @@ class _DraggableObjectState extends State<DraggableObject> {
           if (!_isDragging && !widget.isDragging) {
             setState(() {
               _isDragging = true;
-              _previousPosition = _position;
-              widget.onDragStart();
+              _previousPosition =
+                  _position; // Store the position when dragging starts
+              print("Drag started at: $_previousPosition"); // Debug print
             });
+            widget.onDragStart();
           }
         },
         onPanUpdate: (details) {
@@ -123,32 +163,49 @@ class _DraggableObjectState extends State<DraggableObject> {
             setState(() {
               _position += details.delta;
               widget.onPositionChanged(_position);
+              print("Dragging to: $_position"); // Debug print
             });
           }
         },
         onPanEnd: (details) {
           if (_isDragging) {
-            bool hasCollision = false;
-            for (var otherPosition in _objectPositions) {
-              if (otherPosition != _position &&
-                  widget.checkCollision(_position, otherPosition, 50)) {
-                hasCollision = true;
-                break;
+            print("Drag ended. Checking for collision..."); // Debug print
+            Future.delayed(Duration(milliseconds: 100), () {
+              bool hasCollision = false;
+              for (var otherPosition in _objectPositions) {
+                if (otherPosition != _position &&
+                    widget.checkCollision(_position, otherPosition, 50)) {
+                  hasCollision = true;
+                  print(
+                      "Collision detected with position: $otherPosition"); // Debug print
+                  break;
+                }
               }
-            }
-            if (hasCollision) {
+              if (hasCollision) {
+                setState(() {
+                  _position =
+                      _previousPosition; // Revert to previous position if collision
+                  widget.onPositionChanged(_position);
+                  print(
+                      "Reverted to previous position: $_position"); // Debug print
+                });
+              } else {
+                print(
+                    "No collision detected. Position updated: $_position"); // Debug print
+              }
               setState(() {
-                _position = _previousPosition;
-                widget.onPositionChanged(_position);
+                _isDragging = false;
               });
-            }
-            setState(() {
-              _isDragging = false;
+              widget.onDragEnd();
             });
-            widget.onDragEnd();
           }
         },
-        child: widget.objectWidget, // Render the passed widget (Lottie or any widget)
+        child: Container(
+          width: 50,
+          height: 50,
+          color: widget.isOverlapping ? Colors.red : Colors.blue,
+          child: const Icon(Icons.home, color: Colors.white),
+        ),
       ),
     );
   }
@@ -220,9 +277,7 @@ class _MyAppState extends State<MyApp> {
                           });
                         }
                       },
-                      checkCollision: _checkCollision,
-                      // Pass different Lottie or widget for each draggable object
-                      objectWidget: Lottie.asset('assets/animation_${_objectPositions.indexOf(position)}.json'),
+                      checkCollision: _checkCollision, // Pass the function
                     );
                   },
                 ),

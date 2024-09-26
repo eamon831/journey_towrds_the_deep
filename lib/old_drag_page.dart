@@ -50,17 +50,59 @@ class _ZoomableSurfaceState extends State<ZoomableSurface> {
 
   void _handleScaleUpdate(ScaleUpdateDetails details) {
     setState(() {
-      _scale = (_previousScale * details.scale).clamp(widget.minZoom, widget.maxZoom);
+      final double newScale = (_previousScale * details.scale).clamp(
+        widget.minZoom,
+        widget.maxZoom,
+      );
+      final bool isZoomingIn = newScale > _scale;
+      final bool isZoomingOut = newScale < _scale;
+      _scale = newScale;
       _offset = details.focalPoint - _normalizedOffset * _scale;
-    });
+      // Print whether zooming in or out
+      if (isZoomingIn) {
+        print('Zooming In');
+      } else if (isZoomingOut) {
+        print('Zooming Out');
+        print('Scale: $_scale');
+        print('Offset: $_offset');
 
+        // Detect if the user is zooming out and the scale is less than 1
+        if (_scale < 1) {
+          // Reset the scale and offset
+          _scale = 1;
+          _offset = Offset.zero;
+        }
+      }
+
+      final double width = MediaQuery.of(context).size.width;
+      final double height = MediaQuery.of(context).size.height;
+      final double contentWidth = width * _scale;
+      final double contentHeight = height * _scale;
+
+      final double minOffsetX = -contentWidth + width;
+      final double minOffsetY = -contentHeight + height;
+
+      _offset = Offset(
+        _offset.dx.clamp(minOffsetX, 0),
+        _offset.dy.clamp(minOffsetY, 0),
+      );
+    });
   }
+
+  void _handleDoubleTap() {
+    setState(() {
+      _scale = 1.0;
+      _offset = Offset.zero;
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onScaleStart: _handleScaleStart,
       onScaleUpdate: _handleScaleUpdate,
+      onDoubleTap: _handleDoubleTap,
       child: ClipRect(
         child: Stack(
           children: [
@@ -147,7 +189,7 @@ class _DraggableObjectState extends State<DraggableObject> {
         },
         onPanEnd: (details) {
           bool hasCollision = false;
-          for (var otherModel in _objectPositions) {
+          for (final otherModel in _objectPositions) {
             if (otherModel.position != _position &&
                 widget.checkCollision(_position, otherModel.position, 50)) {
               hasCollision = true;
@@ -212,11 +254,12 @@ class _MyAppState extends State<MyApp> {
                   height: MediaQuery.of(context).size.height,
                 ),
                 ..._objectPositions.map(
-                      (model) {
+                  (model) {
                     final bool isOverlapping = _objectPositions.any(
-                          (otherModel) =>
-                      otherModel.position != model.position &&
-                          _checkCollision(model.position, otherModel.position, 50),
+                      (otherModel) =>
+                          otherModel.position != model.position &&
+                          _checkCollision(
+                              model.position, otherModel.position, 50),
                     );
                     return DraggableObject(
                       position: model.position,
@@ -265,7 +308,8 @@ class _MyAppState extends State<MyApp> {
                           asset: 'assets/lottie/mountain.json',
                         );
                         _objectPositions.add(newModel);
-                        print("Added object at: ${newModel.position}"); // Debug print
+                        print(
+                            "Added object at: ${newModel.position}"); // Debug print
                       });
                     },
                     child: const Text('Add Object'),
