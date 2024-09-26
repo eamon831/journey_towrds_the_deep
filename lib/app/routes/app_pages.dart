@@ -14,14 +14,14 @@ class AppPages {
 
   static final routes = [
     GetPage(
-      name: Routes.home,
-      page: HomeView.new,
-      binding: HomeBinding(),
-    ),
-    GetPage(
       name: Routes.splashPage,
       page: SplashPageView.new,
       binding: SplashPageBinding(),
+    ),
+    GetPage(
+      name: Routes.home,
+      page: HomeView.new,
+      binding: HomeBinding(),
     ),
   ];
 }

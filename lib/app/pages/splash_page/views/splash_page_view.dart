@@ -1,4 +1,3 @@
-
 import '/app/core/exporter.dart';
 import '/app/pages/splash_page/controllers/splash_page_controller.dart';
 
@@ -18,15 +17,15 @@ class SplashPageView extends BaseView<SplashPageController> {
 
   @override
   Widget build(BuildContext context) {
+    //final controller = Get.put(SplashPageController());
     return Scaffold(
-      appBar: appBar(context),
+      appBar: null,
       body: Lottie.asset(
         'assets/lottie/loader.json',
         width: double.infinity,
         height: double.infinity,
         fit: BoxFit.contain,
       ),
-
     );
   }
 }
