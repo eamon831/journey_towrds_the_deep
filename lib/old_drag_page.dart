@@ -96,7 +96,6 @@ class _ZoomableSurfaceState extends State<ZoomableSurface> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

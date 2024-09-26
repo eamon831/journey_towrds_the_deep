@@ -249,10 +249,10 @@ class _MyAppState extends State<MyApp> {
                   height: MediaQuery.of(context).size.height,
                 ),
                 ..._objectPositions.map(
-                      (position) {
+                  (position) {
                     final bool isOverlapping = _objectPositions.any(
-                          (otherPosition) =>
-                      otherPosition != position &&
+                      (otherPosition) =>
+                          otherPosition != position &&
                           _checkCollision(position, otherPosition, 50),
                     );
                     return DraggableObject(
