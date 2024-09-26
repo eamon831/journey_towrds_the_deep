@@ -4,6 +4,7 @@ export 'package:flutter/material.dart';
 export 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 export 'package:get/get.dart';
 export 'package:google_fonts/google_fonts.dart';
+export 'package:lottie/lottie.dart';
 
 export '/app/global_widget/test_global_widget.dart';
 // routes
