@@ -9,7 +9,7 @@ import 'package:sqflite/sqflite.dart';
 part 'db_tables.dart';
 
 class DbHelper {
-  static const String _dbName = 'getx_template.db';
+  static const String _dbName = 'jttd.db';
   static const _dbVersion = 1;
   static var status = '';
 

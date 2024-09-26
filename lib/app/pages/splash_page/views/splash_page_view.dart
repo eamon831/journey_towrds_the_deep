@@ -17,7 +17,7 @@ class SplashPageView extends BaseView<SplashPageController> {
 
   @override
   Widget build(BuildContext context) {
-    //final controller = Get.put(SplashPageController());
+    final controller = Get.put(SplashPageController());
     return Scaffold(
       appBar: null,
       body: Lottie.asset(
