@@ -6,6 +6,7 @@ import '/app/core/exporter.dart';
 
 class HomeController extends BaseController {
   final isDragging = false.obs;
+  final methaneCount = 0.0.obs;
 
   bool checkCollision(Offset position1, Offset position2, double size) {
     final bool collision = distanceBetweenPoints(position1, position2) < size;

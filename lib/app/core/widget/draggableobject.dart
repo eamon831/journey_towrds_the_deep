@@ -1,9 +1,10 @@
+
 import 'package:getx_template/app/entity/draggable_object.dart';
 
 import '/app/core/exporter.dart';
 
 final objectPositions = Rx<List<DraggableObjectModel>>([]);
-
+final selectedObject = Rx<DraggableObjectModel?>(null);
 
 class DraggableObject extends StatefulWidget {
   final Offset position;
@@ -16,6 +17,10 @@ class DraggableObject extends StatefulWidget {
   final Widget objectWidget;
   final double width;
   final double height;
+  final Function(DraggableObjectModel value)? onTap;
+  final VoidCallback onDoubleTap;
+  final bool Function(DraggableObjectModel value) isSelected;
+  final DraggableObjectModel model;
 
   const DraggableObject({
     required this.position,
@@ -28,6 +33,10 @@ class DraggableObject extends StatefulWidget {
     required this.objectWidget,
     required this.width,
     required this.height,
+    required this.onTap,
+    required this.onDoubleTap,
+    required this.isSelected,
+    required this.model,
     super.key,
   });
 
@@ -90,10 +99,35 @@ class _DraggableObjectState extends State<DraggableObject> {
           });
           widget.onDragEnd();
         },
-        child: SizedBox(
-          width: widget.width,
-          height: widget.height,
-          child: widget.objectWidget,
+        child: InkWell(
+          onTap: () {
+            widget.onTap?.call(
+              widget.model.copyWith(
+                position: _position,
+                width: widget.width,
+                height: widget.height,
+                asset: widget.model.asset,
+                onTap: widget.onTap,
+                onDoubleTap: widget.onDoubleTap,
+              ),
+            );
+          },
+          onDoubleTap: widget.onDoubleTap,
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: widget.isSelected.call(widget.model)  ? Colors.red : Colors.transparent,
+                width: 2,
+              ),
+            ),
+            padding: const EdgeInsets.all(8),
+            margin: const EdgeInsets.all(8),
+            child: SizedBox(
+              width: widget.width,
+              height: widget.height,
+              child: widget.objectWidget,
+            ),
+          ),
         ),
       ),
     );

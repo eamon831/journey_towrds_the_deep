@@ -88,7 +88,10 @@ class _ZoomableSurfaceState extends State<ZoomableSurface> {
           children: [
             Transform(
               transform: Matrix4.identity()
-                ..translate(_offset.dx, _offset.dy)
+                ..translate(
+                  _offset.dx,
+                  _offset.dy,
+                )
                 ..scale(_scale),
               child: Padding(
                 padding: widget.padding,
