@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import '/app/pages/planet/bindings/planet_binding.dart';
+import '/app/pages/planet/views/planet_view.dart';
 
 import '/app/pages/home/bindings/home_binding.dart';
 import '/app/pages/home/views/home_view.dart';
@@ -22,6 +24,11 @@ class AppPages {
       name: Routes.home,
       page: HomeView.new,
       binding: HomeBinding(),
+    ),
+    GetPage(
+      name: Routes.planet,
+      page: PlanetView.new,
+      binding: PlanetBinding(),
     ),
   ];
 }

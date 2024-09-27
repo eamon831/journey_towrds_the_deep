@@ -1,4 +1,3 @@
-
 import 'package:getx_template/app/entity/draggable_object.dart';
 
 import '/app/core/exporter.dart';
@@ -116,7 +115,9 @@ class _DraggableObjectState extends State<DraggableObject> {
           child: Container(
             decoration: BoxDecoration(
               border: Border.all(
-                color: widget.isSelected.call(widget.model)  ? Colors.red : Colors.transparent,
+                color: widget.isSelected.call(widget.model)
+                    ? Colors.red
+                    : Colors.transparent,
                 width: 2,
               ),
             ),

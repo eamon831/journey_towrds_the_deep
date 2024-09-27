@@ -45,11 +45,11 @@ class HomeView extends BaseView<HomeController> {
                         final bool isOverlapping = objectPositions.value.any(
                           (otherModel) {
                             return otherModel.position != model.position &&
-                              controller.checkCollision(
-                                model.position,
-                                otherModel.position,
-                                50,
-                              );
+                                controller.checkCollision(
+                                  model.position,
+                                  otherModel.position,
+                                  50,
+                                );
                           },
                         );
                         return DraggableObject(
