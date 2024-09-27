@@ -35,3 +35,7 @@ export 'widget/elevated_container.dart';
 export 'widget/error_screen.dart';
 export 'widget/icon_text_widgets.dart';
 export 'widget/selective_button.dart';
+
+export 'widget/zoomablesurface.dart';
+
+export 'widget/draggableobject.dart';

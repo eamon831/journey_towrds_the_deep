@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '/app/my_app.dart';
 import '/flavors/build_config.dart';
@@ -11,7 +12,9 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   /// uncomment below 2 lines to set the orientation of the app
-  //await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  await SystemChrome.setPreferredOrientations(
+    [DeviceOrientation.landscapeRight],
+  );
 
   final prodConfig = EnvConfig(
     appName: 'Flutter GetX Template Prod',
