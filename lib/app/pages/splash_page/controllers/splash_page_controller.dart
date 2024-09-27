@@ -8,7 +8,7 @@ class SplashPageController extends BaseController {
     Future.delayed(
       const Duration(seconds: 2),
       () {
-        Get.offNamed(Routes.home);
+        Get.offNamed(Routes.planet);
       },
     );
   }
