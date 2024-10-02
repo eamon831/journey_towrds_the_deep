@@ -34,6 +34,7 @@ export 'widget/app_bar_title.dart';
 export 'widget/asset_image_view.dart';
 // widget
 export 'widget/custom_app_bar.dart';
+export 'widget/dialog_pattern.dart';
 export 'widget/draggableobject.dart';
 export 'widget/elevated_container.dart';
 export 'widget/error_screen.dart';
