@@ -4,20 +4,22 @@ class DialogPattern extends StatelessWidget {
   final String title;
   final String subTitle;
   final Widget child;
+  final EdgeInsets insetsPadding;
   const DialogPattern({
     required this.title,
     required this.subTitle,
     required this.child,
+    this.insetsPadding = const EdgeInsets.only(
+      left: 20,
+      right: 20,
+    ),
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      insetPadding: const EdgeInsets.only(
-        left: 20,
-        right: 20,
-      ),
+      insetPadding: insetsPadding,
       backgroundColor: Colors.transparent,
       shadowColor: Colors.grey.withOpacity(.9),
       elevation: 0,

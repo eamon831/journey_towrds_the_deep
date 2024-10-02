@@ -1,3 +1,5 @@
+import 'package:nb_utils/nb_utils.dart';
+
 import '/app/core/exporter.dart';
 
 // Resource class represents a resource like Methane, Sulfur, etc.
@@ -109,13 +111,13 @@ final sulfur = Resource(
   slug: 'sulfur',
   description:
       'Sulfur is a chemical element with the symbol S and atomic number 16.',
-  image: 'assets/images/sulfur.jpg',
+  image: 'assets/lottie/mountain.json',
   type: 'Solid',
 );
 
 final methaneBuilding = ResourceBuilding(
   resource: methane,
-  productionRate: 20,
+  productionRate: 1,
   upgradeRequirements: {
     sulfur: 30,
   },
@@ -123,7 +125,7 @@ final methaneBuilding = ResourceBuilding(
 
 final sulfurBuilding = ResourceBuilding(
   resource: sulfur,
-  productionRate: 15,
+  productionRate: 1,
   upgradeRequirements: {
     methane: 35,
   },
@@ -143,10 +145,19 @@ class PlanetController extends BaseController {
     Get.dialog(
       ResourceUpgraderDialoge(
         object: building.value.resource,
-        onUpgrade: () {
-          if (building.value.upgradeBuilding()) {
-            building.refresh();
-            Get.back();
+        onUpgrade: () async {
+          final confirmation = await confirmationModal(
+            msg:
+                'Are you sure you want to upgrade ${building.value.resource.name} building?',
+          );
+          if (confirmation) {
+            if (building.value.upgradeBuilding()) {
+              building.refresh();
+              Get.back();
+            } else {
+              toast(
+                  'Not enough resources to upgrade ${building.value.resource.name} building.');
+            }
           }
         },
       ),

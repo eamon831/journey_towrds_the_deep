@@ -9,6 +9,7 @@ export 'package:google_fonts/google_fonts.dart';
 export 'package:lottie/lottie.dart';
 
 export '/app/global_widget/count_view.dart';
+export '/app/global_widget/resource_upgrader_dialoge.dart';
 export '/app/global_widget/test_global_widget.dart';
 // routes
 export '/app/routes/app_pages.dart';
@@ -20,6 +21,7 @@ export 'base/base_view.dart';
 export 'db_helper/db_helper.dart';
 // session manager
 export 'session_manager/session_manager.dart';
+export 'utils/confirmation.dart';
 // utils
 export 'utils/validators.dart';
 // values
@@ -41,5 +43,3 @@ export 'widget/error_screen.dart';
 export 'widget/icon_text_widgets.dart';
 export 'widget/selective_button.dart';
 export 'widget/zoomablesurface.dart';
-
-export '/app/global_widget/resource_upgrader_dialoge.dart';
