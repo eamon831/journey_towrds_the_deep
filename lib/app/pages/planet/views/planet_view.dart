@@ -1,3 +1,6 @@
+import 'package:getx_template/app/bindings/initial_binding.dart';
+import 'package:nb_utils/nb_utils.dart';
+
 import '/app/core/exporter.dart';
 import '/app/pages/planet/controllers/planet_controller.dart';
 
@@ -41,47 +44,82 @@ class PlanetView extends BaseView<PlanetController> {
                   children: [
                     InkWell(
                       onTap: () => controller.upgradeObject(
-                        object: methane,
+                        building: methaneBuilding,
                       ),
                       onDoubleTap: () {
-                        print('double tap');
-                        controller.methaneCount.value++;
-                        controller.methaneCount.refresh();
-                      },
-                      child: Lottie.asset(
-                        'assets/lottie/mountain.json',
-                        width: Get.width * 0.2,
-                        height: Get.height * 0.2,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Positioned(
-                bottom: 70,
-                child: Row(
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        // show this view as selected
-                        controller.selectedObject.value = PlanetObject(
-                          name: 'Sulfur',
-                          description:
-                              'Sulfur is a chemical element with the symbol S and atomic number 16.',
-                          image: 'assets/images/sulfur.jpg',
-                          type: 'Solid',
+                        print('Producing Methane');
+                        methaneBuilding.value.produceResource();
+                        print(
+                          'Methane produced ${methaneBuilding.value.resource.currentCount}',
                         );
+                        methaneBuilding.refresh();
                       },
-                      onDoubleTap: () {
-                        print('double tap');
-                      },
+                      child: Container(
+                        height: 100,
+                        width: 100,
+                        decoration: BoxDecoration(
+                          color: AppColors.red,
+                          borderRadius: BorderRadius.circular(
+                            30,
+                          ),
+                        ),
+                        child: const Center(
+                          child: Text(
+                            'Methane',
+                            style: TextStyle(
+                              color: AppColors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+/*
                       child: Lottie.asset(
                         'assets/lottie/mountain.json',
                         width: Get.width * 0.2,
                         height: Get.height * 0.2,
                         fit: BoxFit.cover,
                       ),
+*/
+                    ),
+                    10.width,
+                    InkWell(
+                      onTap: () => controller.upgradeObject(
+                        building: sulfurBuilding,
+                      ),
+                      onDoubleTap: () {
+                        print('Producing Sulfur');
+                        sulfurBuilding.value.produceResource();
+                        print(
+                          'Sulfur produced ${sulfurBuilding.value.resource.currentCount}',
+                        );
+                        sulfurBuilding.refresh();
+                      },
+                      child: Container(
+                        height: 100,
+                        width: 100,
+                        decoration: BoxDecoration(
+                          color: AppColors.red,
+                          borderRadius: BorderRadius.circular(
+                            30,
+                          ),
+                        ),
+                        child: const Center(
+                          child: Text(
+                            'Sulfur',
+                            style: TextStyle(
+                              color: AppColors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+/*
+                      child: Lottie.asset(
+                        'assets/lottie/mountain.json',
+                        width: Get.width * 0.2,
+                        height: Get.height * 0.2,
+                        fit: BoxFit.cover,
+                      ),
+*/
                     ),
                   ],
                 ),
@@ -93,11 +131,13 @@ class PlanetView extends BaseView<PlanetController> {
                   children: [
                     CountView(
                       title: 'Methane',
-                      count: controller.methaneCount.value.toString(),
+                      count: methaneBuilding.value.resource.currentCount
+                          .toString(),
                     ),
                     CountView(
                       title: 'Sulfur',
-                      count: Random().nextInt(100).toString(),
+                      count:
+                          sulfurBuilding.value.resource.currentCount.toString(),
                     ),
                   ],
                 ),

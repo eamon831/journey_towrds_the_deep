@@ -71,19 +71,16 @@ class DialogPattern extends StatelessWidget {
                                   title,
                                   style: const TextStyle(
                                     fontSize: 16,
-                                    color: AppColors.pageBackground,
+                                    color: AppColors.red,
                                   ),
                                 ),
                               ),
-                              Container(
-                                color: Colors.transparent,
-                                child: Text(
-                                  subTitle,
-                                  textAlign: TextAlign.left,
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    color: AppColors.pageBackground,
-                                  ),
+                              Text(
+                                subTitle,
+                                textAlign: TextAlign.left,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  color: AppColors.red,
                                 ),
                               ),
                             ],

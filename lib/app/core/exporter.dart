@@ -41,3 +41,5 @@ export 'widget/error_screen.dart';
 export 'widget/icon_text_widgets.dart';
 export 'widget/selective_button.dart';
 export 'widget/zoomablesurface.dart';
+
+export '/app/global_widget/resource_upgrader_dialoge.dart';

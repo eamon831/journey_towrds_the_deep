@@ -1,37 +1,136 @@
 import '/app/core/exporter.dart';
 
-class PlanetObject {
+// Resource class represents a resource like Methane, Sulfur, etc.
+class Resource {
   final String name;
+  final String slug;
   final String description;
   final String image;
   final String type;
+  int currentCount;
 
-  PlanetObject({
+  Resource({
     required this.name,
+    required this.slug,
     required this.description,
     required this.image,
     required this.type,
+    this.currentCount = 0,
   });
 }
 
-final methane = PlanetObject(
+// ResourceBuilding class that manages resource generation and upgrades
+class ResourceBuilding {
+  final Resource resource; // The resource this building generates
+  int productionRate; // Rate at which the building generates the resource
+  int currentLevel;
+  final int maxLevel;
+  Map<Resource, int> upgradeRequirements;
+
+  ResourceBuilding({
+    required this.resource,
+    this.productionRate = 10, // Default production rate per time unit
+    this.currentLevel = 1,
+    this.maxLevel = 5,
+    Map<Resource, int>? upgradeRequirements,
+  }) : upgradeRequirements = upgradeRequirements ?? {};
+
+  // Method to produce resources based on current production rate
+  void produceResource() {
+    resource.currentCount += productionRate;
+  }
+
+  // Method to upgrade the building to increase production rate
+  bool upgradeBuilding() {
+    if (currentLevel < maxLevel) {
+      // Check if upgrade requirements are met
+      if (_canUpgrade()) {
+        currentLevel++;
+        // increase production rate by 10% for each level
+        // productionRate += 10; // Increase production rate with each upgrade
+        productionRate = (productionRate * 1.1).toInt();
+        _increaseUpgradeRequirements();
+        _deductResourcesForUpgrade();
+        print(
+          '${resource.name} Building upgraded to level $currentLevel. New production rate: $productionRate',
+        );
+        return true;
+      } else {
+        print('Not enough resources to upgrade ${resource.name} Building.');
+        return false;
+      }
+    } else {
+      print('${resource.name} Building is already at max level.');
+      return false;
+    }
+  }
+
+  // Check if the building can be upgraded (enough resources available)
+  bool _canUpgrade() {
+    for (final entry in upgradeRequirements.entries) {
+      if (entry.key.currentCount < entry.value) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  // Deduct the resources used for upgrading
+  void _deductResourcesForUpgrade() {
+    for (final entry in upgradeRequirements.entries) {
+      entry.key.currentCount -= entry.value;
+    }
+  }
+
+  // Increase the upgrade requirements based on current level
+  void _increaseUpgradeRequirements() {
+    // For each resource requirement, increase the amount required
+    upgradeRequirements.updateAll((resource, amount) {
+      return (amount * 1.5).toInt(); // Increase by 50% for each level
+    });
+
+    print('New upgrade requirements for level $currentLevel:');
+    upgradeRequirements.forEach((resource, amount) {
+      print('${resource.name}: $amount');
+    });
+  }
+}
+
+final methane = Resource(
   name: 'Methane',
+  slug: 'methane',
   description: 'Methane is a chemical compound with the chemical formula CH4.',
   image: 'assets/lottie/mountain.json',
   type: 'Gas',
 );
 
-final sulfur = PlanetObject(
+final sulfur = Resource(
   name: 'Sulfur',
+  slug: 'sulfur',
   description:
       'Sulfur is a chemical element with the symbol S and atomic number 16.',
   image: 'assets/images/sulfur.jpg',
   type: 'Solid',
 );
 
+final methaneBuilding = ResourceBuilding(
+  resource: methane,
+  productionRate: 20,
+  upgradeRequirements: {
+    sulfur: 30,
+  },
+).obs;
+
+final sulfurBuilding = ResourceBuilding(
+  resource: sulfur,
+  productionRate: 15,
+  upgradeRequirements: {
+    methane: 35,
+  },
+).obs;
+
 class PlanetController extends BaseController {
   final methaneCount = 0.0.obs;
-  final selectedObject = Rx<PlanetObject?>(null);
 
   @override
   Future<void> onInit() async {
@@ -39,28 +138,17 @@ class PlanetController extends BaseController {
   }
 
   Future<void> upgradeObject({
-    required PlanetObject object,
+    required Rx<ResourceBuilding> building,
   }) async {
-    // upgrade object
-    selectedObject
-      ..value = object
-      ..refresh();
-
     Get.dialog(
-      DialogPattern(
-        title: object.name,
-        subTitle: object.type,
-        child: Column(
-          children: [
-            Text(object.description),
-            Lottie.asset(
-              object.image,
-              width: Get.width * 0.05,
-              height: Get.height * 0.05,
-              fit: BoxFit.cover,
-            ),
-          ],
-        ),
+      ResourceUpgraderDialoge(
+        object: building.value.resource,
+        onUpgrade: () {
+          if (building.value.upgradeBuilding()) {
+            building.refresh();
+            Get.back();
+          }
+        },
       ),
     );
   }
