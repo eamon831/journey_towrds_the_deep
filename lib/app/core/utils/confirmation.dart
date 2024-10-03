@@ -30,7 +30,7 @@ Future<bool> confirmationModal({
                       Get.back(result: false);
                     },
                     child: Container(
-                    //  height: 50,
+                      //  height: 50,
                       alignment: Alignment.center,
                       padding: const EdgeInsets.only(
                         left: 32,
