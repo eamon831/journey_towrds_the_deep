@@ -8,44 +8,7 @@ import '/app/entity/resource_building.dart';
 
 // ResourceBuilding class that manages resource generation and upgrades
 
-var methane = Resource(
-  name: 'Methane',
-  slug: 'methane',
-  description: 'Methane is a chemical compound with the chemical formula CH4.',
-  image: 'assets/lottie/mountain.json',
-  type: 'Gas',
-);
 
-var hydrogenSulfide = Resource(
-  name: 'Hydrogen Sulfide',
-  slug: 'hydrogen-sulfide',
-  description:
-      'Hydrogen sulfide is a colorless gas with the characteristic foul odor of rotten eggs.',
-  image: 'assets/lottie/mountain.json',
-  type: 'Gas',
-);
-
-var ammonia = Resource(
-  name: 'Ammonia',
-  slug: 'ammonia',
-  description:
-      'Ammonia is a compound of nitrogen and hydrogen with the formula NH3.',
-  image: 'assets/lottie/mountain.json',
-  type: 'Liquid',
-);
-
-final methaneBuilding = ResourceBuilding(
-  resource: methane,
-  resourceType: 'methane',
-  upgradeRequirements: {
-    hydrogenSulfide: 30,
-  },
-  currentCount: 0,
-).obs;
-
-final hydrogenSulfideBuilding = Rx<ResourceBuilding?>(null);
-
-final ammoniaBuilding = Rx<ResourceBuilding?>(null);
 
 class PlanetController extends BaseController {
   @override

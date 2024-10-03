@@ -209,6 +209,54 @@ class ShopPageController extends BaseController {
           }
         },
       ),
+      PurchaseAbleBuilding(
+        name: 'Water Purification Building',
+        price: 200,
+        image: 'assets/images/building_2.png',
+        isPurchased: await dbHelper.getAllWhr(
+          tbl: tableBuildings,
+          where: 'resource_type = ?',
+          whereArgs: [
+            ammonia.slug,
+          ],
+        ).then(
+          (value) {
+            return value.isNotEmpty;
+          },
+        ),
+        buyRequirements: {
+          methane: 20,
+          hydrogenSulfide: 10,
+        },
+        resourceBuilding: ResourceBuilding(
+          resource: ammonia,
+          resourceType: ammonia.slug,
+          upgradeRequirements: {
+            methane: 20,
+            hydrogenSulfide: 10,
+          },
+          currentCount: 0,
+        ),
+        onTap: () async {
+          // Check if the building can be purchased
+          final alreadyPurchased = await prefs.getBool(prefHasAmmonia);
+          if (alreadyPurchased) {
+            toast('You already have this building');
+            return;
+          }
+
+          final confirmation = await confirmationModal(
+            msg: 'Do you want to buy this building?',
+          );
+          if (confirmation) {
+            // Do something
+            await prefs.setBool(
+              key: prefHasAmmonia,
+              value: true,
+            );
+          }
+        },
+      ),
     ];
   }
 
