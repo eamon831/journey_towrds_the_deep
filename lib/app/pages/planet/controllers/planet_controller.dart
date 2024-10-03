@@ -115,6 +115,15 @@ final sulfur = Resource(
   type: 'Solid',
 );
 
+final ammonia = Resource(
+  name: 'Ammonia',
+  slug: 'ammonia',
+  description:
+      'Ammonia is a compound of nitrogen and hydrogen with the formula NH3.',
+  image: 'assets/lottie/mountain.json',
+  type: 'Liquid',
+);
+
 final methaneBuilding = ResourceBuilding(
   resource: methane,
   productionRate: 1,
@@ -131,12 +140,53 @@ final sulfurBuilding = ResourceBuilding(
   },
 ).obs;
 
-class PlanetController extends BaseController {
-  final methaneCount = 0.0.obs;
+final ammoniaBuilding = ResourceBuilding(
+  resource: ammonia,
+  productionRate: 1,
+  upgradeRequirements: {
+    methane: 40,
+    sulfur: 40,
+  },
+).obs;
 
+class PlanetController extends BaseController {
+  final hasHydrogenSulfide = RxBool(false);
+  final hasAmmonia = RxBool(false);
   @override
   Future<void> onInit() async {
     super.onInit();
+    hasHydrogenSulfide.value = await prefs.getBool(prefsHasHydrogenSulfide);
+    hasAmmonia.value = await prefs.getBool(prefHasAmmonia);
+    await _initMethaneBuilding();
+    if (hasHydrogenSulfide.value) {
+      await _initHydrogenSulfideBuilding();
+    }
+    if (hasAmmonia.value) {
+      await _initAmmoniaBuilding();
+    }
+
+    methaneBuilding.refresh();
+  }
+
+  Future<void> _initMethaneBuilding() async {
+    final count = await prefs.getInt(prefMethaneCount);
+    if (count != null) {
+      methaneBuilding.value.resource.currentCount = count;
+    }
+  }
+
+  Future<void> _initHydrogenSulfideBuilding() async {
+    final count = await prefs.getInt(prefHydrogenSulfideCount);
+    if (count != null) {
+      sulfurBuilding.value.resource.currentCount = count;
+    }
+  }
+
+  Future<void> _initAmmoniaBuilding() async {
+    final count = await prefs.getInt(prefAmmoniaCount);
+    if (count != null) {
+      ammoniaBuilding.value.resource.currentCount = count;
+    }
   }
 
   Future<void> upgradeObject({

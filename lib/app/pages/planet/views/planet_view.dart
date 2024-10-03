@@ -46,13 +46,17 @@ class PlanetView extends BaseView<PlanetController> {
                       onTap: () => controller.upgradeObject(
                         building: methaneBuilding,
                       ),
-                      onDoubleTap: () {
+                      onDoubleTap: () async {
                         print('Producing Methane');
                         methaneBuilding.value.produceResource();
                         print(
                           'Methane produced ${methaneBuilding.value.resource.currentCount}',
                         );
                         methaneBuilding.refresh();
+                        await controller.prefs.setInt(
+                          key: prefMethaneCount,
+                          value: methaneBuilding.value.resource.currentCount,
+                        );
                       },
                       child: Container(
                         height: 100,
@@ -82,6 +86,7 @@ class PlanetView extends BaseView<PlanetController> {
 */
                     ),
                     10.width,
+                    if(controller.hasHydrogenSulfide.value)
                     InkWell(
                       onTap: () => controller.upgradeObject(
                         building: sulfurBuilding,
@@ -93,6 +98,10 @@ class PlanetView extends BaseView<PlanetController> {
                           'Sulfur produced ${sulfurBuilding.value.resource.currentCount}',
                         );
                         sulfurBuilding.refresh();
+                        controller.prefs.setInt(
+                          key: prefHydrogenSulfideCount,
+                          value: sulfurBuilding.value.resource.currentCount,
+                        );
                       },
                       child: Container(
                         height: 100,

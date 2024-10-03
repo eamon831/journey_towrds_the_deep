@@ -17,20 +17,30 @@ class PurchaseAbleBuilding {
 
 class ShopPageController extends BaseController {
   final buildingList = Rx<List<PurchaseAbleBuilding>?>(null);
-  final methaneCount = Rx<double?>(null);
-  final hydrogenSulfideCount = Rx<double?>(null);
-  final ammoniaCount = Rx<double?>(null);
+  final methaneCount = Rx<int?>(null);
+  final hydrogenSulfideCount = Rx<int?>(null);
+  final ammoniaCount = Rx<int?>(null);
 
   @override
   Future<void> onInit() async {
     super.onInit();
+    methaneCount.value = await prefs.getInt(prefMethaneCount);
+    hydrogenSulfideCount.value = await prefs.getInt(prefHydrogenSulfideCount);
+    ammoniaCount.value = await prefs.getInt(prefAmmoniaCount);
+
+    if(kDebugMode){
+      print('methaneCount: $methaneCount');
+      print('hydrogenSulfideCount: $hydrogenSulfideCount');
+      print('ammoniaCount: $ammoniaCount');
+    }
+
     await getBuildingList();
   }
 
   Future<void> getBuildingList() async {
     buildingList.value = [
       PurchaseAbleBuilding(
-        name: 'Building 1',
+        name: 'Sulfur Building',
         price: 100,
         image: 'assets/images/building_1.png',
         onTap: () async {
@@ -39,7 +49,10 @@ class ShopPageController extends BaseController {
           );
           if (confirmation) {
             // Do something
-            await prefs.setBool(key: prefHasMethane, value: true);
+            await prefs.setBool(
+              key: prefsHasHydrogenSulfide,
+              value: true,
+            );
           }
         },
       ),
