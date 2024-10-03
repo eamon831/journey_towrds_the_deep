@@ -103,21 +103,18 @@ class PlanetView extends BaseView<PlanetController> {
                   children: [
                     CountView(
                       title: 'Methane',
-                      count: methaneBuilding.value.resource.currentCount
-                          .toString(),
+                      count: methaneBuilding.value.currentCount.toString(),
                     ),
                     if (hydrogenSulfideBuilding.value != null)
                       CountView(
                         title: 'Hydrogen Sulfide',
-                        count: hydrogenSulfideBuilding
-                            .value!.resource.currentCount
+                        count: hydrogenSulfideBuilding.value!.currentCount
                             .toString(),
                       ),
                     if (ammoniaBuilding.value != null)
                       CountView(
                         title: 'Ammonia',
-                        count: ammoniaBuilding.value!.resource.currentCount
-                            .toString(),
+                        count: ammoniaBuilding.value!.currentCount.toString(),
                       ),
                   ],
                 ),

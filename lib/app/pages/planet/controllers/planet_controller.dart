@@ -40,6 +40,7 @@ final methaneBuilding = ResourceBuilding(
   upgradeRequirements: {
     hydrogenSulfide: 30,
   },
+  currentCount: 0,
 ).obs;
 
 final hydrogenSulfideBuilding = Rx<ResourceBuilding?>(null);
@@ -125,7 +126,7 @@ class PlanetController extends BaseController {
                 'Are you sure you want to upgrade ${building.value!.resource.name} building?',
           );
           if (confirmation) {
-            if (building.value!.upgradeBuilding()) {
+            if (await building.value!.upgradeBuilding()) {
               await insertBuilding(
                 building: building,
               );

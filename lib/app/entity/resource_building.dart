@@ -5,12 +5,13 @@ import 'package:getx_template/app/core/exporter.dart';
 import 'resource.dart';
 
 class ResourceBuilding {
-  final Resource resource; // The resource this building generates
-  int productionRate; // Rate at which the building generates the resource
+  final Resource resource;
+  int productionRate;
   int currentLevel;
   final int maxLevel;
   final String? resourceType;
   Map<Resource, int> upgradeRequirements;
+  num currentCount;
 
   ResourceBuilding({
     required this.resource,
@@ -19,6 +20,7 @@ class ResourceBuilding {
     this.currentLevel = 1,
     this.maxLevel = 5,
     Map<Resource, int>? upgradeRequirements,
+    required this.currentCount,
   }) : upgradeRequirements = upgradeRequirements ?? {};
 
   factory ResourceBuilding.fromJson(Map<String, dynamic> json) {
@@ -46,24 +48,26 @@ class ResourceBuilding {
       maxLevel: json['max_level'],
       resourceType: json['resource_type'],
       upgradeRequirements: upgradeRequirements,
+      currentCount: json['current_count'],
     );
   }
 
   // Method to produce resources based on current production rate
   void produceResource() {
     resource.currentCount += productionRate;
+    currentCount = resource.currentCount;
   }
 
   // Method to upgrade the building to increase production rate
-  bool upgradeBuilding() {
+  Future<bool> upgradeBuilding() async {
     if (currentLevel < maxLevel) {
       // Check if upgrade requirements are met
-      if (_canUpgrade()) {
+      if (await _canUpgrade()) {
         currentLevel++;
         // increase production rate by 10% for each level
         // productionRate += 10; // Increase production rate with each upgrade
         productionRate = (productionRate * 1.1).toInt();
-        _deductResourcesForUpgrade();
+        await _deductResourcesForUpgrade();
         _increaseUpgradeRequirements();
 
         print(
@@ -81,12 +85,24 @@ class ResourceBuilding {
   }
 
   // Check if the building can be upgraded (enough resources available)
-  bool _canUpgrade() {
-    for (final entry in upgradeRequirements.entries) {
-      if (entry.key.currentCount < entry.value) {
+  Future<bool> _canUpgrade() async {
+    final dbHelper = DbHelper.instance;
+    final keys = upgradeRequirements.keys.toList();
+
+    for (final key in keys) {
+      final data = await dbHelper.getAllWhr(
+        tbl: tableBuildings,
+        where: 'resource_type = ?',
+        whereArgs: [
+          key.slug,
+        ],
+      );
+
+      if (data[0]['current_count'] < upgradeRequirements[key]!) {
         return false;
       }
     }
+
     return true;
   }
 
@@ -103,6 +119,17 @@ class ResourceBuilding {
     await Future.forEach<Resource>(
       keys,
       (key) async {
+        // get count of the resource from the database and deduct the amount required
+        final data = await dbHelper.getAllWhr(
+          tbl: tableBuildings,
+          where: 'resource_type = ?',
+          whereArgs: [
+            key.slug,
+          ],
+        );
+
+        final currentCount = data[0]['current_count'];
+        final newCount = currentCount - upgradeRequirements[key]!;
         await dbHelper.updateWhere(
           tbl: tableBuildings,
           where: 'resource_type = ?',
@@ -110,7 +137,7 @@ class ResourceBuilding {
             key.slug,
           ],
           data: {
-            'resource': jsonEncode(key.toJson()),
+            'current_count': newCount,
           },
         );
       },
@@ -151,6 +178,7 @@ class ResourceBuilding {
           },
         ),
       ),
+      'current_count': currentCount,
     };
   }
 }

@@ -28,12 +28,12 @@ class Resource {
 
   Map<String, dynamic> toJson() {
     return {
+      'currentCount': currentCount,
       'name': name,
       'slug': slug,
       'description': description,
       'image': image,
       'type': type,
-      'currentCount': currentCount,
     };
   }
 }

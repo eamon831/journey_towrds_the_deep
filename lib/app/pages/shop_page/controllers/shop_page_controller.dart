@@ -58,10 +58,10 @@ class PurchaseAbleBuilding {
 
 class ShopPageController extends BaseController {
   final buildingList = Rx<List<PurchaseAbleBuilding>?>(null);
-  final methaneCount = Rx<int>(methaneBuilding.value.resource.currentCount);
+  final methaneCount = Rx<num>(methaneBuilding.value.currentCount);
   final hydrogenSulfideCount =
-      Rx<int?>(hydrogenSulfideBuilding.value?.resource.currentCount);
-  final ammoniaCount = Rx<int?>(ammoniaBuilding.value?.resource.currentCount);
+      Rx<num?>(hydrogenSulfideBuilding.value?.currentCount);
+  final ammoniaCount = Rx<num?>(ammoniaBuilding.value?.currentCount);
 
   @override
   Future<void> onInit() async {
@@ -102,6 +102,7 @@ class ShopPageController extends BaseController {
           upgradeRequirements: {
             methane: 10,
           },
+          currentCount: 0,
         ),
         onTap: () async {
           // Check if the building can be purchased
@@ -149,6 +150,7 @@ class ShopPageController extends BaseController {
             methane: 20,
             hydrogenSulfide: 10,
           },
+          currentCount: 0,
         ),
         onTap: () async {
           // Check if the building can be purchased
