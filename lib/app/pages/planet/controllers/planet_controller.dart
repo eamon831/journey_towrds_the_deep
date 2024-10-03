@@ -155,7 +155,7 @@ class PlanetController extends BaseController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    hasHydrogenSulfide.value = await prefs.getBool(prefsHasHydrogenSulfide);
+    hasHydrogenSulfide.value = await prefs.getBool(prefHasHydrogenSulfide);
     hasAmmonia.value = await prefs.getBool(prefHasAmmonia);
     await _initMethaneBuilding();
     if (hasHydrogenSulfide.value) {

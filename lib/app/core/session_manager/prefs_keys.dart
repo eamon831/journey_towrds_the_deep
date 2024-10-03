@@ -2,7 +2,7 @@ part of 'session_manager.dart';
 
 const prefLanguage = 'language';
 const prefHasMethane = 'hasMethane';
-const prefsHasHydrogenSulfide = 'hydrogenSulfide';
+const prefHasHydrogenSulfide = 'hydrogenSulfide';
 const prefHasAmmonia = 'hasAmmonia';
 
 //count

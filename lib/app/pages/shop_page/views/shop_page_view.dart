@@ -40,7 +40,9 @@ class ShopPageView extends BaseView<ShopPageController> {
                       height: 100,
                       width: 100,
                       decoration: BoxDecoration(
-                        color: AppColors.red,
+                        color: building.isPurchased
+                            ? AppColors.grey
+                            : AppColors.red,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Column(
