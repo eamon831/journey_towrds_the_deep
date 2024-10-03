@@ -9,5 +9,3 @@ const prefHasAmmonia = 'hasAmmonia';
 const prefMethaneCount = 'methaneCount';
 const prefHydrogenSulfideCount = 'hydrogenSulfideCount';
 const prefAmmoniaCount = 'ammoniaCount';
-
-

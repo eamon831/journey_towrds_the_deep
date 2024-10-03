@@ -45,3 +45,5 @@ export 'widget/selective_button.dart';
 export 'widget/zoomablesurface.dart';
 
 export 'widget/icon_text_button.dart';
+
+export '/app/global_widget/building_view.dart';

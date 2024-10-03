@@ -42,7 +42,7 @@ class PlanetView extends BaseView<PlanetController> {
                 left: 50, // Adjust these values as needed
                 child: Row(
                   children: [
-                    InkWell(
+                    BuildingView(
                       onTap: () => controller.upgradeObject(
                         building: methaneBuilding,
                       ),
@@ -58,78 +58,49 @@ class PlanetView extends BaseView<PlanetController> {
                           value: methaneBuilding.value.resource.currentCount,
                         );
                       },
-                      child: Container(
-                        height: 100,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          color: AppColors.red,
-                          borderRadius: BorderRadius.circular(
-                            30,
-                          ),
-                        ),
-                        child: const Center(
-                          child: Text(
-                            'Methane',
-                            style: TextStyle(
-                              color: AppColors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-/*
-                      child: Lottie.asset(
-                        'assets/lottie/mountain.json',
-                        width: Get.width * 0.2,
-                        height: Get.height * 0.2,
-                        fit: BoxFit.cover,
-                      ),
-*/
+                      building: methaneBuilding.value,
                     ),
                     10.width,
-                    if(controller.hasHydrogenSulfide.value)
-                    InkWell(
-                      onTap: () => controller.upgradeObject(
-                        building: sulfurBuilding,
-                      ),
-                      onDoubleTap: () {
-                        print('Producing Sulfur');
-                        sulfurBuilding.value.produceResource();
-                        print(
-                          'Sulfur produced ${sulfurBuilding.value.resource.currentCount}',
-                        );
-                        sulfurBuilding.refresh();
-                        controller.prefs.setInt(
-                          key: prefHydrogenSulfideCount,
-                          value: sulfurBuilding.value.resource.currentCount,
-                        );
-                      },
-                      child: Container(
-                        height: 100,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          color: AppColors.red,
-                          borderRadius: BorderRadius.circular(
-                            30,
-                          ),
+                    if (controller.hasHydrogenSulfide.value)
+                      BuildingView(
+                        onTap: () => controller.upgradeObject(
+                          building: hydrogenSulfideBuilding,
                         ),
-                        child: const Center(
-                          child: Text(
-                            'Sulfur',
-                            style: TextStyle(
-                              color: AppColors.white,
-                            ),
-                          ),
+                        onDoubleTap: () {
+                          print('Producing Sulfur');
+                          hydrogenSulfideBuilding.value.produceResource();
+                          print(
+                            'Sulfur produced ${hydrogenSulfideBuilding.value.resource.currentCount}',
+                          );
+                          hydrogenSulfideBuilding.refresh();
+                          controller.prefs.setInt(
+                            key: prefHydrogenSulfideCount,
+                            value: hydrogenSulfideBuilding
+                                .value.resource.currentCount,
+                          );
+                        },
+                        building: hydrogenSulfideBuilding.value,
+                      ),
+                    10.width,
+                    if (controller.hasAmmonia.value)
+                      BuildingView(
+                        onTap: () => controller.upgradeObject(
+                          building: ammoniaBuilding,
                         ),
+                        onDoubleTap: () {
+                          print('Producing Ammonia');
+                          ammoniaBuilding.value.produceResource();
+                          print(
+                            'Ammonia produced ${ammoniaBuilding.value.resource.currentCount}',
+                          );
+                          ammoniaBuilding.refresh();
+                          controller.prefs.setInt(
+                            key: prefAmmoniaCount,
+                            value: ammoniaBuilding.value.resource.currentCount,
+                          );
+                        },
+                        building: ammoniaBuilding.value,
                       ),
-/*
-                      child: Lottie.asset(
-                        'assets/lottie/mountain.json',
-                        width: Get.width * 0.2,
-                        height: Get.height * 0.2,
-                        fit: BoxFit.cover,
-                      ),
-*/
-                    ),
                   ],
                 ),
               ),
@@ -143,11 +114,19 @@ class PlanetView extends BaseView<PlanetController> {
                       count: methaneBuilding.value.resource.currentCount
                           .toString(),
                     ),
-                    CountView(
-                      title: 'Sulfur',
-                      count:
-                          sulfurBuilding.value.resource.currentCount.toString(),
-                    ),
+                    if (controller.hasHydrogenSulfide.value)
+                      CountView(
+                        title: 'Hydrogen Sulfide',
+                        count: hydrogenSulfideBuilding
+                            .value.resource.currentCount
+                            .toString(),
+                      ),
+                    if (controller.hasAmmonia.value)
+                      CountView(
+                        title: 'Ammonia',
+                        count: ammoniaBuilding.value.resource.currentCount
+                            .toString(),
+                      ),
                   ],
                 ),
               ),

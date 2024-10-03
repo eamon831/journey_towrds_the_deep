@@ -106,13 +106,13 @@ final methane = Resource(
   type: 'Gas',
 );
 
-final sulfur = Resource(
-  name: 'Sulfur',
-  slug: 'sulfur',
+final hydrogenSulfide = Resource(
+  name: 'Hydrogen Sulfide',
+  slug: 'hydrogen-sulfide',
   description:
-      'Sulfur is a chemical element with the symbol S and atomic number 16.',
+      'Hydrogen sulfide is a colorless gas with the characteristic foul odor of rotten eggs.',
   image: 'assets/lottie/mountain.json',
-  type: 'Solid',
+  type: 'Gas',
 );
 
 final ammonia = Resource(
@@ -128,12 +128,12 @@ final methaneBuilding = ResourceBuilding(
   resource: methane,
   productionRate: 1,
   upgradeRequirements: {
-    sulfur: 30,
+    hydrogenSulfide: 30,
   },
 ).obs;
 
-final sulfurBuilding = ResourceBuilding(
-  resource: sulfur,
+final hydrogenSulfideBuilding = ResourceBuilding(
+  resource: hydrogenSulfide,
   productionRate: 1,
   upgradeRequirements: {
     methane: 35,
@@ -145,7 +145,7 @@ final ammoniaBuilding = ResourceBuilding(
   productionRate: 1,
   upgradeRequirements: {
     methane: 40,
-    sulfur: 40,
+    hydrogenSulfide: 40,
   },
 ).obs;
 
@@ -178,7 +178,7 @@ class PlanetController extends BaseController {
   Future<void> _initHydrogenSulfideBuilding() async {
     final count = await prefs.getInt(prefHydrogenSulfideCount);
     if (count != null) {
-      sulfurBuilding.value.resource.currentCount = count;
+      hydrogenSulfideBuilding.value.resource.currentCount = count;
     }
   }
 
