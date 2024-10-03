@@ -147,32 +147,10 @@ class PlanetView extends BaseView<PlanetController> {
                 right: 10,
                 child: Column(
                   children: [
-                    InkWell(
-                      child: Container(
-                        // height: 50,
-                        // width: 50,
-                        decoration: BoxDecoration(
-                          color: AppColors.red,
-                          borderRadius: BorderRadius.circular(
-                            8,
-                          ),
-                        ),
-                        padding: const EdgeInsets.all(16),
-                        child: const Column(
-                          children: [
-                            Icon(
-                              Icons.add,
-                              color: AppColors.white,
-                            ),
-                            Text(
-                              'Shop',
-                              style: TextStyle(
-                                color: AppColors.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                    IconTextButton(
+                      text: 'Shop',
+                      icon: Icons.add,
+                      onTap: controller.goToShop,
                     ),
                   ],
                 ),

@@ -163,4 +163,8 @@ class PlanetController extends BaseController {
       ),
     );
   }
+
+  void goToShop() {
+    Get.toNamed(Routes.shopPage);
+  }
 }
