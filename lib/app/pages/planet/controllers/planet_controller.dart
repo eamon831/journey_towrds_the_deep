@@ -42,40 +42,20 @@ final methaneBuilding = ResourceBuilding(
   },
 ).obs;
 
-final hydrogenSulfideBuilding = ResourceBuilding(
-  resource: hydrogenSulfide,
-  resourceType: 'hydrogen-sulfide',
-  upgradeRequirements: {
-    methane: 35,
-  },
-).obs;
+final hydrogenSulfideBuilding = Rx<ResourceBuilding?>(null);
 
-final ammoniaBuilding = ResourceBuilding(
-  resource: ammonia,
-  resourceType: 'ammonia',
-  upgradeRequirements: {
-    methane: 40,
-    hydrogenSulfide: 40,
-  },
-).obs;
+final ammoniaBuilding = Rx<ResourceBuilding?>(null);
 
 class PlanetController extends BaseController {
-  final hasHydrogenSulfide = RxBool(false);
-  final hasAmmonia = RxBool(false);
   @override
   Future<void> onInit() async {
     super.onInit();
 
     await _init();
 
-    hasHydrogenSulfide.value = await prefs.getBool(prefHasHydrogenSulfide);
-    hasAmmonia.value = await prefs.getBool(prefHasAmmonia);
-    if (hasHydrogenSulfide.value) {
-      await _initHydrogenSulfideBuilding();
-    }
-    if (hasAmmonia.value) {
-      await _initAmmoniaBuilding();
-    }
+    await _initHydrogenSulfideBuilding();
+
+    await _initAmmoniaBuilding();
 
     methaneBuilding.refresh();
   }
@@ -130,18 +110,19 @@ class PlanetController extends BaseController {
   }
 
   Future<void> upgradeObject({
-    required Rx<ResourceBuilding> building,
+    required Rx<ResourceBuilding?> building,
   }) async {
+    if(building.value == null) return;
     Get.dialog(
       ResourceUpgraderDialoge(
-        object: building.value.resource,
+        object: building.value!.resource,
         onUpgrade: () async {
           final confirmation = await confirmationModal(
             msg:
-                'Are you sure you want to upgrade ${building.value.resource.name} building?',
+                'Are you sure you want to upgrade ${building.value!.resource.name} building?',
           );
           if (confirmation) {
-            if (building.value.upgradeBuilding()) {
+            if (building.value!.upgradeBuilding()) {
               await insertBuilding(
                 building: building,
               );
@@ -149,7 +130,7 @@ class PlanetController extends BaseController {
               Get.back();
             } else {
               toast(
-                'Not enough resources to upgrade ${building.value.resource.name} building.',
+                'Not enough resources to upgrade ${building.value!.resource.name} building.',
               );
             }
           }
@@ -163,15 +144,15 @@ class PlanetController extends BaseController {
   }
 
   Future<void> insertBuilding({
-    required Rx<ResourceBuilding> building,
+    required Rx<ResourceBuilding?> building,
   }) async {
     await dbHelper.updateWhere(
       tbl: tableBuildings,
       where: 'resource_type = ?',
       whereArgs: [
-        building.value.resourceType,
+        building.value!.resourceType,
       ],
-      data: building.value.toJson(),
+      data: building.value!.toJson(),
     );
   }
 

@@ -64,53 +64,53 @@ class PlanetView extends BaseView<PlanetController> {
                           building: methaneBuilding.value,
                         ),
                         10.height,
-                        if (controller.hasHydrogenSulfide.value)
+                        if (hydrogenSulfideBuilding.value != null)
                           BuildingView(
                             onTap: () => controller.upgradeObject(
                               building: hydrogenSulfideBuilding,
                             ),
                             onDoubleTap: () {
                               print('Producing Sulfur');
-                              hydrogenSulfideBuilding.value.produceResource();
+                              hydrogenSulfideBuilding.value!.produceResource();
                               print(
-                                'Sulfur produced ${hydrogenSulfideBuilding.value.resource.currentCount}',
+                                'Sulfur produced ${hydrogenSulfideBuilding.value!.resource.currentCount}',
                               );
                               hydrogenSulfideBuilding.refresh();
                               controller.prefs.setInt(
                                 key: prefHydrogenSulfideCount,
                                 value: hydrogenSulfideBuilding
-                                    .value.resource.currentCount,
+                                    .value!.resource.currentCount,
                               );
                             },
-                            building: hydrogenSulfideBuilding.value,
+                            building: hydrogenSulfideBuilding.value!,
                           ),
                         10.height,
-                        if (controller.hasAmmonia.value)
+                        if (ammoniaBuilding.value != null)
                           BuildingView(
                             onTap: () => controller.upgradeObject(
                               building: ammoniaBuilding,
                             ),
                             onDoubleTap: () {
                               print('Producing Ammonia');
-                              ammoniaBuilding.value.produceResource();
+                              ammoniaBuilding.value!.produceResource();
                               print(
-                                'Ammonia produced ${ammoniaBuilding.value.resource.currentCount}',
+                                'Ammonia produced ${ammoniaBuilding.value!.resource.currentCount}',
                               );
                               ammoniaBuilding.refresh();
                               controller.prefs.setInt(
                                 key: prefAmmoniaCount,
-                                value:
-                                    ammoniaBuilding.value.resource.currentCount,
+                                value: ammoniaBuilding
+                                    .value!.resource.currentCount,
                               );
                             },
-                            building: ammoniaBuilding.value,
+                            building: ammoniaBuilding.value!,
                           ),
                       ],
                     ),
                     Column(
                       children: [
                         ElevatedButton(
-                          onPressed: (){},
+                          onPressed: () {},
                           child: Text('Insert Building'),
                         ),
                         ElevatedButton(
@@ -136,17 +136,17 @@ class PlanetView extends BaseView<PlanetController> {
                       count: methaneBuilding.value.resource.currentCount
                           .toString(),
                     ),
-                    if (controller.hasHydrogenSulfide.value)
+                    if (hydrogenSulfideBuilding.value != null)
                       CountView(
                         title: 'Hydrogen Sulfide',
                         count: hydrogenSulfideBuilding
-                            .value.resource.currentCount
+                            .value!.resource.currentCount
                             .toString(),
                       ),
-                    if (controller.hasAmmonia.value)
+                    if (ammoniaBuilding.value != null)
                       CountView(
                         title: 'Ammonia',
-                        count: ammoniaBuilding.value.resource.currentCount
+                        count: ammoniaBuilding.value!.resource.currentCount
                             .toString(),
                       ),
                   ],
