@@ -27,13 +27,24 @@ class PurchaseAbleBuilding {
   });
 
   // Method to check if the building can be purchased
-  bool canPurchase() {
+  Future<bool> canPurchase() async {
     if (isPurchased) {
       return false;
     }
     if (buyRequirements != null) {
-      for (final entry in buyRequirements!.entries) {
-        if (entry.key.currentCount < entry.value) {
+      final dbHelper = DbHelper.instance;
+
+      final keys = buyRequirements?.keys.toList() ?? [];
+      for (final key in keys) {
+        final data = await dbHelper.getAllWhr(
+          tbl: tableBuildings,
+          where: 'resource_type = ?',
+          whereArgs: [
+            key.slug,
+          ],
+        );
+
+        if (data[0]['current_count'] < buyRequirements![key]!) {
           return false;
         }
       }
@@ -42,13 +53,39 @@ class PurchaseAbleBuilding {
   }
 
   // Method to purchase the building
-  bool purchaseBuilding() {
-    if (canPurchase()) {
+  Future<bool> purchaseBuilding() async {
+    if (await canPurchase()) {
       // Deduct resources
       if (buyRequirements != null) {
-        for (final entry in buyRequirements!.entries) {
-          entry.key.currentCount -= entry.value;
-        }
+        final dbHelper = DbHelper.instance;
+        final keys = buyRequirements?.keys.toList() ?? [];
+
+        await Future.forEach<Resource>(
+          keys,
+          (key) async {
+            // get count of the resource from the database and deduct the amount required
+            final data = await dbHelper.getAllWhr(
+              tbl: tableBuildings,
+              where: 'resource_type = ?',
+              whereArgs: [
+                key.slug,
+              ],
+            );
+
+            final currentCount = data[0]['current_count'];
+            final newCount = currentCount - buyRequirements![key]!;
+            await dbHelper.updateWhere(
+              tbl: tableBuildings,
+              where: 'resource_type = ?',
+              whereArgs: [
+                key.slug,
+              ],
+              data: {
+                'current_count': newCount,
+              },
+            );
+          },
+        );
       }
       return true;
     }
@@ -178,12 +215,12 @@ class ShopPageController extends BaseController {
   Future<void> purchaseBuilding(
     PurchaseAbleBuilding building,
   ) async {
-    if (building.canPurchase()) {
+    if (await building.canPurchase()) {
       final confirmation = await confirmationModal(
         msg: 'Do you want to buy this building?',
       );
       if (confirmation) {
-        if (building.purchaseBuilding()) {
+        if (await building.purchaseBuilding()) {
           await dbHelper.insertList(
             deleteBeforeInsert: false,
             tableName: tableBuildings,
