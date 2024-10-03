@@ -48,7 +48,7 @@ class PlanetView extends BaseView<PlanetController> {
                           onTap: () => controller.upgradeObject(
                             building: methaneBuilding,
                           ),
-                          onDoubleTap: ()=>controller.produceResource(
+                          onDoubleTap: () => controller.produceResource(
                             building: methaneBuilding,
                           ),
                           building: methaneBuilding.value,
@@ -59,19 +59,9 @@ class PlanetView extends BaseView<PlanetController> {
                             onTap: () => controller.upgradeObject(
                               building: hydrogenSulfideBuilding,
                             ),
-                            onDoubleTap: () {
-                              print('Producing Sulfur');
-                              hydrogenSulfideBuilding.value!.produceResource();
-                              print(
-                                'Sulfur produced ${hydrogenSulfideBuilding.value!.resource.currentCount}',
-                              );
-                              hydrogenSulfideBuilding.refresh();
-                              controller.prefs.setInt(
-                                key: prefHydrogenSulfideCount,
-                                value: hydrogenSulfideBuilding
-                                    .value!.resource.currentCount,
-                              );
-                            },
+                            onDoubleTap: () => controller.produceResource(
+                              building: hydrogenSulfideBuilding,
+                            ),
                             building: hydrogenSulfideBuilding.value!,
                           ),
                         10.height,
@@ -80,19 +70,9 @@ class PlanetView extends BaseView<PlanetController> {
                             onTap: () => controller.upgradeObject(
                               building: ammoniaBuilding,
                             ),
-                            onDoubleTap: () {
-                              print('Producing Ammonia');
-                              ammoniaBuilding.value!.produceResource();
-                              print(
-                                'Ammonia produced ${ammoniaBuilding.value!.resource.currentCount}',
-                              );
-                              ammoniaBuilding.refresh();
-                              controller.prefs.setInt(
-                                key: prefAmmoniaCount,
-                                value: ammoniaBuilding
-                                    .value!.resource.currentCount,
-                              );
-                            },
+                            onDoubleTap: () => controller.produceResource(
+                              building: ammoniaBuilding,
+                            ),
                             building: ammoniaBuilding.value!,
                           ),
                       ],

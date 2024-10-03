@@ -8,7 +8,7 @@ import '/app/entity/resource_building.dart';
 
 // ResourceBuilding class that manages resource generation and upgrades
 
-final methane = Resource(
+var methane = Resource(
   name: 'Methane',
   slug: 'methane',
   description: 'Methane is a chemical compound with the chemical formula CH4.',
@@ -16,7 +16,7 @@ final methane = Resource(
   type: 'Gas',
 );
 
-final hydrogenSulfide = Resource(
+var hydrogenSulfide = Resource(
   name: 'Hydrogen Sulfide',
   slug: 'hydrogen-sulfide',
   description:
@@ -25,7 +25,7 @@ final hydrogenSulfide = Resource(
   type: 'Gas',
 );
 
-final ammonia = Resource(
+var ammonia = Resource(
   name: 'Ammonia',
   slug: 'ammonia',
   description:
@@ -70,6 +70,7 @@ class PlanetController extends BaseController {
     );
     if (methaneBuildingData.isNotEmpty) {
       methaneBuilding.value = ResourceBuilding.fromJson(methaneBuildingData[0]);
+      methane = methaneBuilding.value.resource;
     } else {
       await dbHelper.insertList(
         deleteBeforeInsert: false,
@@ -91,6 +92,7 @@ class PlanetController extends BaseController {
       hydrogenSulfideBuilding.value = ResourceBuilding.fromJson(
         hydrogenSulfideBuildingData[0],
       );
+      hydrogenSulfide = hydrogenSulfideBuilding.value!.resource;
     }
   }
 
@@ -106,6 +108,7 @@ class PlanetController extends BaseController {
       ammoniaBuilding.value = ResourceBuilding.fromJson(
         ammoniaBuildingData[0],
       );
+      ammonia = ammoniaBuilding.value!.resource;
     }
   }
 
@@ -180,14 +183,15 @@ class PlanetController extends BaseController {
   }
 
   Future<void> produceResource({
-    required Rx<ResourceBuilding> building,
+    required Rx<ResourceBuilding?> building,
   }) async {
-    building.value.produceResource();
+    if (building.value == null) return;
+    building.value!.produceResource();
     await dbHelper.updateWhere(
       tbl: tableBuildings,
       data: building.toJson(),
       where: 'resource_type = ?',
-      whereArgs: [building.value.resourceType],
+      whereArgs: [building.value!.resourceType],
     );
     await Get.forceAppUpdate();
   }

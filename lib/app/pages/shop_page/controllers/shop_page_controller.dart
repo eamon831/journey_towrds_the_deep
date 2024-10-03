@@ -56,19 +56,14 @@ class PurchaseAbleBuilding {
 
 class ShopPageController extends BaseController {
   final buildingList = Rx<List<PurchaseAbleBuilding>?>(null);
-  final methaneCount = Rx<int?>(null);
-  final hydrogenSulfideCount = Rx<int?>(null);
-  final ammoniaCount = Rx<int?>(null);
+  final methaneCount = Rx<int>(methaneBuilding.value.resource.currentCount);
+  final hydrogenSulfideCount =
+      Rx<int?>(hydrogenSulfideBuilding.value?.resource.currentCount);
+  final ammoniaCount = Rx<int?>(ammoniaBuilding.value?.resource.currentCount);
 
   @override
   Future<void> onInit() async {
     super.onInit();
-    methaneCount.value = await prefs.getInt(prefMethaneCount);
-    hydrogenSulfideCount.value = await prefs.getInt(prefHydrogenSulfideCount);
-    ammoniaCount.value = await prefs.getInt(prefAmmoniaCount);
-    methane.currentCount = methaneCount.value ?? 0;
-    hydrogenSulfide.currentCount = hydrogenSulfideCount.value ?? 0;
-    ammonia.currentCount = ammoniaCount.value ?? 0;
 
     if (kDebugMode) {
       print('methaneCount: $methaneCount');
