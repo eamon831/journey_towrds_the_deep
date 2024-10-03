@@ -129,7 +129,11 @@ class PlanetController extends BaseController {
               await insertBuilding(
                 building: building,
               );
+              await onInit();
               building.refresh();
+
+              // deduct from db
+
               Get.back();
             } else {
               toast(

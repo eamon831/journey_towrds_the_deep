@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:getx_template/app/core/exporter.dart';
+
 import 'resource.dart';
 
 class ResourceBuilding {
@@ -12,10 +14,10 @@ class ResourceBuilding {
 
   ResourceBuilding({
     required this.resource,
+    required this.resourceType,
     this.productionRate = 10, // Default production rate per time unit
     this.currentLevel = 1,
     this.maxLevel = 5,
-    required this.resourceType,
     Map<Resource, int>? upgradeRequirements,
   }) : upgradeRequirements = upgradeRequirements ?? {};
 
@@ -89,10 +91,30 @@ class ResourceBuilding {
   }
 
   // Deduct the resources used for upgrading
-  void _deductResourcesForUpgrade() {
+  Future<void> _deductResourcesForUpgrade() async {
     for (final entry in upgradeRequirements.entries) {
       entry.key.currentCount -= entry.value;
     }
+    // deduct resources from the player's inventory
+    final dbHelper = DbHelper.instance;
+
+    final keys = upgradeRequirements.keys.toList();
+
+    await Future.forEach<Resource>(
+      keys,
+      (key) async {
+        await dbHelper.updateWhere(
+          tbl: tableBuildings,
+          where: 'resource_type = ?',
+          whereArgs: [
+            key.slug,
+          ],
+          data: {
+            'resource': jsonEncode(key.toJson()),
+          },
+        );
+      },
+    );
   }
 
   // Increase the upgrade requirements based on current level
