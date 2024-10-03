@@ -217,7 +217,7 @@ class ShopPageController extends BaseController {
           tbl: tableBuildings,
           where: 'resource_type = ?',
           whereArgs: [
-            ammonia.slug,
+            water.slug,
           ],
         ).then(
           (value) {
@@ -227,35 +227,19 @@ class ShopPageController extends BaseController {
         buyRequirements: {
           methane: 20,
           hydrogenSulfide: 10,
+          ammonia: 30,
         },
         resourceBuilding: ResourceBuilding(
-          resource: ammonia,
-          resourceType: ammonia.slug,
+          resource: water,
+          resourceType: water.slug,
           upgradeRequirements: {
             methane: 20,
             hydrogenSulfide: 10,
+            ammonia: 30,
           },
           currentCount: 0,
         ),
-        onTap: () async {
-          // Check if the building can be purchased
-          final alreadyPurchased = await prefs.getBool(prefHasAmmonia);
-          if (alreadyPurchased) {
-            toast('You already have this building');
-            return;
-          }
-
-          final confirmation = await confirmationModal(
-            msg: 'Do you want to buy this building?',
-          );
-          if (confirmation) {
-            // Do something
-            await prefs.setBool(
-              key: prefHasAmmonia,
-              value: true,
-            );
-          }
-        },
+        onTap: () async {},
       ),
     ];
   }

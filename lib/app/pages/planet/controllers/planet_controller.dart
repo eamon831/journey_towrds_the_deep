@@ -8,8 +8,6 @@ import '/app/entity/resource_building.dart';
 
 // ResourceBuilding class that manages resource generation and upgrades
 
-
-
 class PlanetController extends BaseController {
   @override
   Future<void> onInit() async {
@@ -20,6 +18,8 @@ class PlanetController extends BaseController {
     await _initHydrogenSulfideBuilding();
 
     await _initAmmoniaBuilding();
+
+    await _initWaterBuilding();
 
     methaneBuilding.refresh();
   }
@@ -73,6 +73,22 @@ class PlanetController extends BaseController {
         ammoniaBuildingData[0],
       );
       ammonia = ammoniaBuilding.value!.resource;
+    }
+  }
+
+  Future<void> _initWaterBuilding() async {
+    final waterBuildingData = await dbHelper.getAllWhr(
+      tbl: tableBuildings,
+      where: 'resource_type = ?',
+      whereArgs: [
+        'water',
+      ],
+    );
+    if (waterBuildingData.isNotEmpty) {
+      waterBuilding.value = ResourceBuilding.fromJson(
+        waterBuildingData[0],
+      );
+      water = waterBuilding.value!.resource;
     }
   }
 

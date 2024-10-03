@@ -42,40 +42,52 @@ class PlanetView extends BaseView<PlanetController> {
                 left: 50, // Adjust these values as needed
                 child: Row(
                   children: [
-                    Column(
-                      children: [
-                        BuildingView(
-                          onTap: () => controller.upgradeObject(
-                            building: methaneBuilding,
-                          ),
-                          onDoubleTap: () => controller.produceResource(
-                            building: methaneBuilding,
-                          ),
-                          building: methaneBuilding.value,
-                        ),
-                        10.height,
-                        if (hydrogenSulfideBuilding.value != null)
+                    SingleChildScrollView(
+                      child: Column(
+                        children: [
                           BuildingView(
                             onTap: () => controller.upgradeObject(
-                              building: hydrogenSulfideBuilding,
+                              building: methaneBuilding,
                             ),
                             onDoubleTap: () => controller.produceResource(
-                              building: hydrogenSulfideBuilding,
+                              building: methaneBuilding,
                             ),
-                            building: hydrogenSulfideBuilding.value!,
+                            building: methaneBuilding.value,
                           ),
-                        10.height,
-                        if (ammoniaBuilding.value != null)
-                          BuildingView(
-                            onTap: () => controller.upgradeObject(
-                              building: ammoniaBuilding,
+                          10.height,
+                          if (hydrogenSulfideBuilding.value != null)
+                            BuildingView(
+                              onTap: () => controller.upgradeObject(
+                                building: hydrogenSulfideBuilding,
+                              ),
+                              onDoubleTap: () => controller.produceResource(
+                                building: hydrogenSulfideBuilding,
+                              ),
+                              building: hydrogenSulfideBuilding.value!,
                             ),
-                            onDoubleTap: () => controller.produceResource(
-                              building: ammoniaBuilding,
+                          10.height,
+                          if (ammoniaBuilding.value != null)
+                            BuildingView(
+                              onTap: () => controller.upgradeObject(
+                                building: ammoniaBuilding,
+                              ),
+                              onDoubleTap: () => controller.produceResource(
+                                building: ammoniaBuilding,
+                              ),
+                              building: ammoniaBuilding.value!,
                             ),
-                            building: ammoniaBuilding.value!,
-                          ),
-                      ],
+                          if (waterBuilding.value != null)
+                            BuildingView(
+                              onTap: () => controller.upgradeObject(
+                                building: waterBuilding,
+                              ),
+                              onDoubleTap: () => controller.produceResource(
+                                building: waterBuilding,
+                              ),
+                              building: waterBuilding.value!,
+                            ),
+                        ],
+                      ),
                     ),
                     Column(
                       children: [
@@ -112,6 +124,11 @@ class PlanetView extends BaseView<PlanetController> {
                             .toString(),
                       ),
                     if (ammoniaBuilding.value != null)
+                      CountView(
+                        title: 'Ammonia',
+                        count: ammoniaBuilding.value!.currentCount.toString(),
+                      ),
+                    if (waterBuilding.value != null)
                       CountView(
                         title: 'Ammonia',
                         count: ammoniaBuilding.value!.currentCount.toString(),
