@@ -112,7 +112,7 @@ class PlanetController extends BaseController {
   Future<void> upgradeObject({
     required Rx<ResourceBuilding?> building,
   }) async {
-    if(building.value == null) return;
+    if (building.value == null) return;
     Get.dialog(
       ResourceUpgraderDialoge(
         object: building.value!.resource,
@@ -177,5 +177,18 @@ class PlanetController extends BaseController {
         ResourceBuilding.fromJson(value[0]);
       },
     );
+  }
+
+  Future<void> produceResource({
+    required Rx<ResourceBuilding> building,
+  }) async {
+    building.value.produceResource();
+    await dbHelper.updateWhere(
+      tbl: tableBuildings,
+      data: building.toJson(),
+      where: 'resource_type = ?',
+      whereArgs: [building.value.resourceType],
+    );
+    await Get.forceAppUpdate();
   }
 }

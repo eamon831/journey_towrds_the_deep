@@ -190,6 +190,7 @@ class ShopPageController extends BaseController {
               building.resourceBuilding!.toJson(),
             ],
           );
+          Get.offAllNamed(Routes.planet);
         } else {
           toast('Not enough resources to buy this building');
         }

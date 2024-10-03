@@ -48,19 +48,9 @@ class PlanetView extends BaseView<PlanetController> {
                           onTap: () => controller.upgradeObject(
                             building: methaneBuilding,
                           ),
-                          onDoubleTap: () async {
-                            print('Producing Methane');
-                            methaneBuilding.value.produceResource();
-                            print(
-                              'Methane produced ${methaneBuilding.value.resource.currentCount}',
-                            );
-                            methaneBuilding.refresh();
-                            await controller.prefs.setInt(
-                              key: prefMethaneCount,
-                              value:
-                                  methaneBuilding.value.resource.currentCount,
-                            );
-                          },
+                          onDoubleTap: ()=>controller.produceResource(
+                            building: methaneBuilding,
+                          ),
                           building: methaneBuilding.value,
                         ),
                         10.height,
