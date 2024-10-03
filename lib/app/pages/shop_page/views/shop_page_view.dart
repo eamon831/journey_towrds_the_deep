@@ -35,9 +35,9 @@ class ShopPageView extends BaseView<ShopPageController> {
                 itemBuilder: (context, index) {
                   final building = controller.buildingList.value![index];
                   return InkWell(
-                    onTap: building.onTap,
+                    onTap: () => controller.purchaseBuilding(building),
                     child: Container(
-                      height: 100,
+                   //   height: 100,
                       width: 100,
                       decoration: BoxDecoration(
                         color: building.isPurchased
@@ -53,6 +53,12 @@ class ShopPageView extends BaseView<ShopPageController> {
                             style: boldTextStyle(color: AppColors.white),
                           ),
                           10.height,
+                          Text(
+                            'Price: ${building.buyRequirements?.map(
+                              (key, value) => MapEntry(key.name, value),
+                            )}',
+                            style: secondaryTextStyle(color: AppColors.white),
+                          ),
                         ],
                       ),
                     ).paddingOnly(left: 16, right: 16),

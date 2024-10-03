@@ -36,7 +36,6 @@ final ammonia = Resource(
 
 final methaneBuilding = ResourceBuilding(
   resource: methane,
-  productionRate: 1,
   resourceType: 'methane',
   upgradeRequirements: {
     hydrogenSulfide: 30,
@@ -45,7 +44,6 @@ final methaneBuilding = ResourceBuilding(
 
 final hydrogenSulfideBuilding = ResourceBuilding(
   resource: hydrogenSulfide,
-  productionRate: 1,
   resourceType: 'hydrogen-sulfide',
   upgradeRequirements: {
     methane: 35,
@@ -54,7 +52,6 @@ final hydrogenSulfideBuilding = ResourceBuilding(
 
 final ammoniaBuilding = ResourceBuilding(
   resource: ammonia,
-  productionRate: 1,
   resourceType: 'ammonia',
   upgradeRequirements: {
     methane: 40,
@@ -68,9 +65,11 @@ class PlanetController extends BaseController {
   @override
   Future<void> onInit() async {
     super.onInit();
+
+    await _init();
+
     hasHydrogenSulfide.value = await prefs.getBool(prefHasHydrogenSulfide);
     hasAmmonia.value = await prefs.getBool(prefHasAmmonia);
-    await _initMethaneBuilding();
     if (hasHydrogenSulfide.value) {
       await _initHydrogenSulfideBuilding();
     }
@@ -81,24 +80,52 @@ class PlanetController extends BaseController {
     methaneBuilding.refresh();
   }
 
-  Future<void> _initMethaneBuilding() async {
-    final count = await prefs.getInt(prefMethaneCount);
-    if (count != null) {
-      methaneBuilding.value.resource.currentCount = count;
+  Future<void> _init() async {
+    final methaneBuildingData = await dbHelper.getAllWhr(
+      tbl: tableBuildings,
+      where: 'resource_type = ?',
+      whereArgs: [
+        'methane',
+      ],
+    );
+    if (methaneBuildingData.isNotEmpty) {
+      methaneBuilding.value = ResourceBuilding.fromJson(methaneBuildingData[0]);
+    } else {
+      await dbHelper.insertList(
+        deleteBeforeInsert: false,
+        tableName: tableBuildings,
+        dataList: [methaneBuilding.value.toJson()],
+      );
     }
   }
 
   Future<void> _initHydrogenSulfideBuilding() async {
-    final count = await prefs.getInt(prefHydrogenSulfideCount);
-    if (count != null) {
-      hydrogenSulfideBuilding.value.resource.currentCount = count;
+    final hydrogenSulfideBuildingData = await dbHelper.getAllWhr(
+      tbl: tableBuildings,
+      where: 'resource_type = ?',
+      whereArgs: [
+        'hydrogen-sulfide',
+      ],
+    );
+    if (hydrogenSulfideBuildingData.isNotEmpty) {
+      hydrogenSulfideBuilding.value = ResourceBuilding.fromJson(
+        hydrogenSulfideBuildingData[0],
+      );
     }
   }
 
   Future<void> _initAmmoniaBuilding() async {
-    final count = await prefs.getInt(prefAmmoniaCount);
-    if (count != null) {
-      ammoniaBuilding.value.resource.currentCount = count;
+    final ammoniaBuildingData = await dbHelper.getAllWhr(
+      tbl: tableBuildings,
+      where: 'resource_type = ?',
+      whereArgs: [
+        'ammonia',
+      ],
+    );
+    if (ammoniaBuildingData.isNotEmpty) {
+      ammoniaBuilding.value = ResourceBuilding.fromJson(
+        ammoniaBuildingData[0],
+      );
     }
   }
 
