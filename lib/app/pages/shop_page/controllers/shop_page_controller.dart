@@ -1,7 +1,7 @@
-import 'package:getx_template/app/pages/planet/controllers/planet_controller.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '/app/core/exporter.dart';
+import '/app/entity/resource.dart';
 
 class PurchaseAbleBuilding {
   final String name;

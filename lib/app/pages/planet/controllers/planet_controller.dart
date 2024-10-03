@@ -1,125 +1,12 @@
+import 'dart:convert';
+
 import 'package:nb_utils/nb_utils.dart';
 
 import '/app/core/exporter.dart';
-
-// Resource class represents a resource like Methane, Sulfur, etc.
-class Resource {
-  final String name;
-  final String slug;
-  final String description;
-  final String image;
-  final String type;
-  int currentCount;
-
-  Resource({
-    required this.name,
-    required this.slug,
-    required this.description,
-    required this.image,
-    required this.type,
-    this.currentCount = 0,
-  });
-
-  factory Resource.fromJson(Map<String, dynamic> json) {
-    return Resource(
-      name: json['name'],
-      slug: json['slug'],
-      description: json['description'],
-      image: json['image'],
-      type: json['type'],
-      currentCount: json['currentCount'],
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'slug': slug,
-      'description': description,
-      'image': image,
-      'type': type,
-      'currentCount': currentCount,
-    };
-  }
-}
+import '/app/entity/resource.dart';
+import '/app/entity/resource_building.dart';
 
 // ResourceBuilding class that manages resource generation and upgrades
-class ResourceBuilding {
-  final Resource resource; // The resource this building generates
-  int productionRate; // Rate at which the building generates the resource
-  int currentLevel;
-  final int maxLevel;
-  Map<Resource, int> upgradeRequirements;
-
-  ResourceBuilding({
-    required this.resource,
-    this.productionRate = 10, // Default production rate per time unit
-    this.currentLevel = 1,
-    this.maxLevel = 5,
-    Map<Resource, int>? upgradeRequirements,
-  }) : upgradeRequirements = upgradeRequirements ?? {};
-
-  // Method to produce resources based on current production rate
-  void produceResource() {
-    resource.currentCount += productionRate;
-  }
-
-  // Method to upgrade the building to increase production rate
-  bool upgradeBuilding() {
-    if (currentLevel < maxLevel) {
-      // Check if upgrade requirements are met
-      if (_canUpgrade()) {
-        currentLevel++;
-        // increase production rate by 10% for each level
-        // productionRate += 10; // Increase production rate with each upgrade
-        productionRate = (productionRate * 1.1).toInt();
-        _deductResourcesForUpgrade();
-        _increaseUpgradeRequirements();
-
-        print(
-          '${resource.name} Building upgraded to level $currentLevel. New production rate: $productionRate',
-        );
-        return true;
-      } else {
-        print('Not enough resources to upgrade ${resource.name} Building.');
-        return false;
-      }
-    } else {
-      print('${resource.name} Building is already at max level.');
-      return false;
-    }
-  }
-
-  // Check if the building can be upgraded (enough resources available)
-  bool _canUpgrade() {
-    for (final entry in upgradeRequirements.entries) {
-      if (entry.key.currentCount < entry.value) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  // Deduct the resources used for upgrading
-  void _deductResourcesForUpgrade() {
-    for (final entry in upgradeRequirements.entries) {
-      entry.key.currentCount -= entry.value;
-    }
-  }
-
-  // Increase the upgrade requirements based on current level
-  void _increaseUpgradeRequirements() {
-    // For each resource requirement, increase the amount required
-    upgradeRequirements.updateAll((resource, amount) {
-      return (amount * 1.5).toInt(); // Increase by 50% for each level
-    });
-
-    print('New upgrade requirements for level $currentLevel:');
-    upgradeRequirements.forEach((resource, amount) {
-      print('${resource.name}: $amount');
-    });
-  }
-}
 
 final methane = Resource(
   name: 'Methane',
@@ -150,6 +37,7 @@ final ammonia = Resource(
 final methaneBuilding = ResourceBuilding(
   resource: methane,
   productionRate: 1,
+  resourceType: 'methane',
   upgradeRequirements: {
     hydrogenSulfide: 30,
   },
@@ -158,6 +46,7 @@ final methaneBuilding = ResourceBuilding(
 final hydrogenSulfideBuilding = ResourceBuilding(
   resource: hydrogenSulfide,
   productionRate: 1,
+  resourceType: 'hydrogen-sulfide',
   upgradeRequirements: {
     methane: 35,
   },
@@ -166,6 +55,7 @@ final hydrogenSulfideBuilding = ResourceBuilding(
 final ammoniaBuilding = ResourceBuilding(
   resource: ammonia,
   productionRate: 1,
+  resourceType: 'ammonia',
   upgradeRequirements: {
     methane: 40,
     hydrogenSulfide: 40,
@@ -225,6 +115,9 @@ class PlanetController extends BaseController {
           );
           if (confirmation) {
             if (building.value.upgradeBuilding()) {
+              await insertBuilding(
+                building: building,
+              );
               building.refresh();
               Get.back();
             } else {
@@ -240,5 +133,41 @@ class PlanetController extends BaseController {
 
   void goToShop() {
     Get.toNamed(Routes.shopPage);
+  }
+
+  Future<void> insertBuilding({
+    required Rx<ResourceBuilding> building,
+  }) async {
+    await dbHelper.updateWhere(
+      tbl: tableBuildings,
+      where: 'resource_type = ?',
+      whereArgs: [
+        building.value.resourceType,
+      ],
+      data: building.value.toJson(),
+    );
+  }
+
+  Future<void> clearBuilding() async {
+    await dbHelper.deleteAll(
+      tbl: tableBuildings,
+    );
+  }
+
+  Future<void> buildBuilding() async {
+    await dbHelper.getAll(tbl: tableBuildings).then(
+      (value) {
+        final upgradeRequirements =
+            jsonDecode(value.first['upgrade_requirements']);
+        upgradeRequirements.forEach(
+          (key, value) {
+            print('key: $key, value: $value');
+            final x = Resource.fromJson(value);
+            print('Resource: ${x.toJson()}');
+          },
+        );
+        ResourceBuilding.fromJson(value[0]);
+      },
+    );
   }
 }

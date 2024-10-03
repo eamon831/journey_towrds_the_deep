@@ -1,5 +1,5 @@
-import 'package:getx_template/app/core/utils/parser.dart';
-import 'package:getx_template/app/entity/user.dart';
+import '/app/core/utils/parser.dart';
+import '/app/entity/user.dart';
 
 import '/app/core/exporter.dart';
 import 'client/api_options.dart';

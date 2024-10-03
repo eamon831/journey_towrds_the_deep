@@ -1,4 +1,4 @@
-import 'package:getx_template/app/entity/draggable_object.dart';
+import '/app/entity/draggable_object.dart';
 
 import '/app/core/exporter.dart';
 

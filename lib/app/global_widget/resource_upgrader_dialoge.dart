@@ -1,4 +1,5 @@
-import 'package:getx_template/app/pages/planet/controllers/planet_controller.dart';
+
+import '/app/entity/resource.dart';
 
 import '/app/core/exporter.dart';
 

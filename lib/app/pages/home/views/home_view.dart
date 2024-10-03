@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:getx_template/app/entity/draggable_object.dart';
+import '/app/entity/draggable_object.dart';
 
 import '/app/core/exporter.dart';
 import '/app/pages/home/controllers/home_controller.dart';

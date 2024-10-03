@@ -1,4 +1,4 @@
-import 'package:getx_template/app/bindings/initial_binding.dart';
+import '/app/bindings/initial_binding.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '/app/core/exporter.dart';
@@ -40,67 +40,89 @@ class PlanetView extends BaseView<PlanetController> {
                 // Example positioning
                 top: 30, // Adjust these values as needed
                 left: 50, // Adjust these values as needed
-                child: Column(
+                child: Row(
                   children: [
-                    BuildingView(
-                      onTap: () => controller.upgradeObject(
-                        building: methaneBuilding,
-                      ),
-                      onDoubleTap: () async {
-                        print('Producing Methane');
-                        methaneBuilding.value.produceResource();
-                        print(
-                          'Methane produced ${methaneBuilding.value.resource.currentCount}',
-                        );
-                        methaneBuilding.refresh();
-                        await controller.prefs.setInt(
-                          key: prefMethaneCount,
-                          value: methaneBuilding.value.resource.currentCount,
-                        );
-                      },
-                      building: methaneBuilding.value,
+                    Column(
+                      children: [
+                        BuildingView(
+                          onTap: () => controller.upgradeObject(
+                            building: methaneBuilding,
+                          ),
+                          onDoubleTap: () async {
+                            print('Producing Methane');
+                            methaneBuilding.value.produceResource();
+                            print(
+                              'Methane produced ${methaneBuilding.value.resource.currentCount}',
+                            );
+                            methaneBuilding.refresh();
+                            await controller.prefs.setInt(
+                              key: prefMethaneCount,
+                              value:
+                                  methaneBuilding.value.resource.currentCount,
+                            );
+                          },
+                          building: methaneBuilding.value,
+                        ),
+                        10.height,
+                        if (controller.hasHydrogenSulfide.value)
+                          BuildingView(
+                            onTap: () => controller.upgradeObject(
+                              building: hydrogenSulfideBuilding,
+                            ),
+                            onDoubleTap: () {
+                              print('Producing Sulfur');
+                              hydrogenSulfideBuilding.value.produceResource();
+                              print(
+                                'Sulfur produced ${hydrogenSulfideBuilding.value.resource.currentCount}',
+                              );
+                              hydrogenSulfideBuilding.refresh();
+                              controller.prefs.setInt(
+                                key: prefHydrogenSulfideCount,
+                                value: hydrogenSulfideBuilding
+                                    .value.resource.currentCount,
+                              );
+                            },
+                            building: hydrogenSulfideBuilding.value,
+                          ),
+                        10.height,
+                        if (controller.hasAmmonia.value)
+                          BuildingView(
+                            onTap: () => controller.upgradeObject(
+                              building: ammoniaBuilding,
+                            ),
+                            onDoubleTap: () {
+                              print('Producing Ammonia');
+                              ammoniaBuilding.value.produceResource();
+                              print(
+                                'Ammonia produced ${ammoniaBuilding.value.resource.currentCount}',
+                              );
+                              ammoniaBuilding.refresh();
+                              controller.prefs.setInt(
+                                key: prefAmmoniaCount,
+                                value:
+                                    ammoniaBuilding.value.resource.currentCount,
+                              );
+                            },
+                            building: ammoniaBuilding.value,
+                          ),
+                      ],
                     ),
-                    10.height,
-                    if (controller.hasHydrogenSulfide.value)
-                      BuildingView(
-                        onTap: () => controller.upgradeObject(
-                          building: hydrogenSulfideBuilding,
+                    Column(
+                      children: [
+                        ElevatedButton(
+                          onPressed: (){},
+                          child: Text('Insert Building'),
                         ),
-                        onDoubleTap: () {
-                          print('Producing Sulfur');
-                          hydrogenSulfideBuilding.value.produceResource();
-                          print(
-                            'Sulfur produced ${hydrogenSulfideBuilding.value.resource.currentCount}',
-                          );
-                          hydrogenSulfideBuilding.refresh();
-                          controller.prefs.setInt(
-                            key: prefHydrogenSulfideCount,
-                            value: hydrogenSulfideBuilding
-                                .value.resource.currentCount,
-                          );
-                        },
-                        building: hydrogenSulfideBuilding.value,
-                      ),
-                    10.height,
-                    if (controller.hasAmmonia.value)
-                      BuildingView(
-                        onTap: () => controller.upgradeObject(
-                          building: ammoniaBuilding,
+                        ElevatedButton(
+                          onPressed: controller.clearBuilding,
+                          child: Text('Clear Building'),
                         ),
-                        onDoubleTap: () {
-                          print('Producing Ammonia');
-                          ammoniaBuilding.value.produceResource();
-                          print(
-                            'Ammonia produced ${ammoniaBuilding.value.resource.currentCount}',
-                          );
-                          ammoniaBuilding.refresh();
-                          controller.prefs.setInt(
-                            key: prefAmmoniaCount,
-                            value: ammoniaBuilding.value.resource.currentCount,
-                          );
-                        },
-                        building: ammoniaBuilding.value,
-                      ),
+                        ElevatedButton(
+                          onPressed: controller.buildBuilding,
+                          child: Text('Build Building'),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),
