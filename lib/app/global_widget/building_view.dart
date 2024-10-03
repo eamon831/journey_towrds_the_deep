@@ -20,26 +20,39 @@ class BuildingView extends StatelessWidget {
       onTap: onTap,
       onDoubleTap: onDoubleTap,
       child: Container(
-        height: 100,
-        width: 100,
+       // height: 100,
+      //  width: 100,
         decoration: BoxDecoration(
           color: AppColors.red,
           borderRadius: BorderRadius.circular(
-            30,
+            20,
           ),
         ),
+        padding: const EdgeInsets.all(10),
         child: Center(
           child: Column(
             children: [
               Text(
-                building.resource.name,
-                style: TextStyle(
+               'Name  ${building.resource.name}',
+                style: const TextStyle(
                   color: AppColors.white,
                 ),
               ),
               Text(
-                building.currentLevel.toString(),
-                style: TextStyle(
+                'Level ${building.currentLevel}',
+                style: const TextStyle(
+                  color: AppColors.white,
+                ),
+              ),
+              Text(
+                'Production Rate ${building.productionRate}',
+                style: const TextStyle(
+                  color: AppColors.white,
+                ),
+              ),
+              Text(
+                'Next Upgrade Cost ${building.upgradeRequirements.map((key, value) => MapEntry(key.name, value))}',
+                style: const TextStyle(
                   color: AppColors.white,
                 ),
               ),

@@ -19,6 +19,28 @@ class Resource {
     required this.type,
     this.currentCount = 0,
   });
+
+  factory Resource.fromJson(Map<String, dynamic> json) {
+    return Resource(
+      name: json['name'],
+      slug: json['slug'],
+      description: json['description'],
+      image: json['image'],
+      type: json['type'],
+      currentCount: json['currentCount'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'slug': slug,
+      'description': description,
+      'image': image,
+      'type': type,
+      'currentCount': currentCount,
+    };
+  }
 }
 
 // ResourceBuilding class that manages resource generation and upgrades
@@ -51,8 +73,9 @@ class ResourceBuilding {
         // increase production rate by 10% for each level
         // productionRate += 10; // Increase production rate with each upgrade
         productionRate = (productionRate * 1.1).toInt();
-        _increaseUpgradeRequirements();
         _deductResourcesForUpgrade();
+        _increaseUpgradeRequirements();
+
         print(
           '${resource.name} Building upgraded to level $currentLevel. New production rate: $productionRate',
         );

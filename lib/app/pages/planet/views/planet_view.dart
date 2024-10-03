@@ -38,9 +38,9 @@ class PlanetView extends BaseView<PlanetController> {
               ),
               Positioned(
                 // Example positioning
-                top: 100, // Adjust these values as needed
+                top: 30, // Adjust these values as needed
                 left: 50, // Adjust these values as needed
-                child: Row(
+                child: Column(
                   children: [
                     BuildingView(
                       onTap: () => controller.upgradeObject(
@@ -60,7 +60,7 @@ class PlanetView extends BaseView<PlanetController> {
                       },
                       building: methaneBuilding.value,
                     ),
-                    10.width,
+                    10.height,
                     if (controller.hasHydrogenSulfide.value)
                       BuildingView(
                         onTap: () => controller.upgradeObject(
@@ -81,7 +81,7 @@ class PlanetView extends BaseView<PlanetController> {
                         },
                         building: hydrogenSulfideBuilding.value,
                       ),
-                    10.width,
+                    10.height,
                     if (controller.hasAmmonia.value)
                       BuildingView(
                         onTap: () => controller.upgradeObject(
