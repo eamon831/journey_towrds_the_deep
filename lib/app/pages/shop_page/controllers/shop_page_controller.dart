@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:getx_template/app/entity/resource_building.dart';
 import 'package:getx_template/app/pages/planet/controllers/planet_controller.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -171,7 +173,9 @@ class ShopPageController extends BaseController {
     ];
   }
 
-  Future<void> purchaseBuilding(PurchaseAbleBuilding building) async {
+  Future<void> purchaseBuilding(
+    PurchaseAbleBuilding building,
+  ) async {
     if (building.canPurchase()) {
       final confirmation = await confirmationModal(
         msg: 'Do you want to buy this building?',
@@ -185,6 +189,25 @@ class ShopPageController extends BaseController {
               building.resourceBuilding!.toJson(),
             ],
           );
+
+          final keys = building.buyRequirements?.keys.toList() ?? [];
+
+          await Future.forEach<Resource>(
+            keys,
+            (key) async {
+              await dbHelper.updateWhere(
+                tbl: tableBuildings,
+                where: 'resource_type = ?',
+                whereArgs: [
+                  key.slug,
+                ],
+                data: {
+                  'resource': jsonEncode(key.toJson()),
+                },
+              );
+            },
+          );
+
           Get.offAllNamed(Routes.planet);
         } else {
           toast('Not enough resources to buy this building');
