@@ -156,7 +156,8 @@ class PlanetController extends BaseController {
               Get.back();
             } else {
               toast(
-                  'Not enough resources to upgrade ${building.value.resource.name} building.');
+                'Not enough resources to upgrade ${building.value.resource.name} building.',
+              );
             }
           }
         },
