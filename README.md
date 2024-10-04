@@ -67,3 +67,13 @@ Build a complex and self-sustaining ecosystem that thrives in complete darkness.
 ## No Sunlight Gameplay: Rely on chemical energy for survival.
 ## Ecosystem Evolution: Manage evolving lifeforms and expanding systems.
 ## Strategic Resource Management: Trade and upgrade volcanic elements to optimize resource generation.
+
+# Technologies:
+dart,sqflite,flutter
+
+# Architecture:
+MVVM
+
+# Screenshots:
+
+![Screenshot 1](Simulator Screenshot - iPad Air 13-inch (M2) - 2024-10-04 at 18.28.44.png)
