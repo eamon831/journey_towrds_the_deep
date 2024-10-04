@@ -45,6 +45,7 @@ class ResourceUpgraderDialoge extends StatelessWidget {
                       ),
                     ),
                     Wrap(
+                      spacing: 10,
                       children: building.upgradeRequirements.entries.map(
                         (entry) {
                           return Chip(

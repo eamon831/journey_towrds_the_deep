@@ -66,11 +66,29 @@ class ShopPageView extends BaseView<ShopPageController> {
                             style: boldTextStyle(color: AppColors.white),
                           ),
                           10.height,
-                          Text(
-                            'Price: ${building.buyRequirements?.map(
-                              (key, value) => MapEntry(key.name, value),
-                            )}',
-                            style: secondaryTextStyle(color: AppColors.white),
+                          Column(
+                            crossAxisAlignment: startCAA,
+                            children: [
+                              Text(
+                                'Price',
+                                style: primaryTextStyle(
+                                  color: AppColors.white,
+                                ),
+                              ),
+                              Wrap(
+                                runSpacing: 10,
+                                spacing: 10,
+                                children: building.buyRequirements?.entries.map(
+                                      (entry) {
+                                        return Chip(
+                                          label: Text(
+                                              '${entry.key.name}: ${entry.value}'),
+                                        );
+                                      },
+                                    ).toList() ??
+                                    [],
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -82,11 +100,10 @@ class ShopPageView extends BaseView<ShopPageController> {
                 bottom: 16,
                 child: Row(
                   children: [
-                    if (controller.methaneCount.value != null)
-                      _countViews(
-                        label: 'Methane',
-                        value: controller.methaneCount.value.toString(),
-                      ),
+                    _countViews(
+                      label: 'Methane',
+                      value: controller.methaneCount.value.toString(),
+                    ),
                     if (controller.hydrogenSulfideCount.value != null)
                       _countViews(
                         label: 'Hydrogen Sulfide',
@@ -120,8 +137,8 @@ class ShopPageView extends BaseView<ShopPageController> {
           ),
         ),
       ),
-      padding: EdgeInsets.all(8),
-      margin: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
+      margin: const EdgeInsets.all(8),
       child: Row(
         crossAxisAlignment: centerCAA,
         mainAxisAlignment: centerMAA,
