@@ -2,7 +2,7 @@
 
 # Journey Towards The Deep
 
-## A Strategy Game for NASA Space Apps Challenge 2024
+## A Strategy Game for NASA Space Apps Challenge Bangladesh 2024
 
 ### Description:
 
@@ -68,11 +68,24 @@ Build a complex and self-sustaining ecosystem that thrives in complete darkness.
 ## Ecosystem Evolution: Manage evolving lifeforms and expanding systems.
 ## Strategic Resource Management: Trade and upgrade volcanic elements to optimize resource generation.
 
+# How to run the project
+simply clone the project and run "flutter pub get" in the terminal on the root project directory
+then run the project from the terminal by running the command "flutter run  lib/main_dev.dart or flutter run  lib/main_prod.dart"
+
 # Technologies:
 dart,sqflite,flutter
 
 # Architecture:
 MVVM
+
+## State Management
+
+This project uses **GetX** for state management. The relevant files are located in the `lib/app/core/base` directory:
+
+## Libraries Used
+
+- **[get](https://pub.dev/packages/get)**: State management library for Flutter with a focus on simplicity and performance.
+- **[nb_utils](https://pub.dev/packages/nb_utils)**: A package for common utility methods and widgets.
 
 # Screenshots:
 
