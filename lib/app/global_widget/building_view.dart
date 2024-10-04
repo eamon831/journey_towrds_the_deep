@@ -1,3 +1,5 @@
+import 'package:nb_utils/nb_utils.dart';
+
 import '/app/core/exporter.dart';
 import '/app/entity/resource_building.dart';
 
@@ -37,9 +39,10 @@ class BuildingView extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              SizedBox(
-                height: Get.height * 0.2,
-                width: Get.width * 0.2,
+              Container(
+                height: Get.height * 0.1,
+                width: Get.width * 0.1,
+                margin: const EdgeInsets.only(bottom: 30),
                 child: building.resource.image.contains('.json')
                     ? Lottie.asset(
                         'assets/lottie/methane_$currentLevel.json',
@@ -49,23 +52,25 @@ class BuildingView extends StatelessWidget {
                       )
                     : Image.asset(
                         'assets/images/${building.resourceType}_$currentLevel.png',
-                        width: Get.width * 0.2,
-                        height: Get.height * 0.2,
+                        width: Get.width * 0.1,
+                        height: Get.height * 0.1,
                         fit: BoxFit.contain,
                       ),
               ),
               Text(
                 'Name :${building.resource.name}',
                 style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 10,
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
               Text(
                 'Level :${building.currentLevel}',
                 style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 10,
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ],
