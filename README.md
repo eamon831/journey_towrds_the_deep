@@ -11,6 +11,18 @@ Journey Towards The Deep is a strategy game set on a distant planet where the Su
 # Game Concept
 A world without sunlight requires innovation. Start small, with a methane volcano as your base, and expand by unlocking and upgrading new elements. As you gather more resources, you can purchase more advanced structures and lifeforms, evolving them to adapt to the darkness.
 
+# Screenshots:
+
+![Screenshot 1](s1.png)
+![Screenshot 2](s2.png)
+![Screenshot 3](s3.png)
+![Screenshot 4](s4.png)
+![Screenshot 5](s5.png)
+
+# Gameplay Video On Google Drive:
+[Gameplay Video](https://drive.google.com/file/d/1l2y-fy7YMc7H8UaOGIPVWYfgTGFzPOn1/view?usp=sharing)
+
+
 # Core Mechanics
 ## Resource Management
 
@@ -87,15 +99,7 @@ This project uses **GetX** for state management. The relevant files are located 
 - **[get](https://pub.dev/packages/get)**: State management library for Flutter with a focus on simplicity and performance.
 - **[nb_utils](https://pub.dev/packages/nb_utils)**: A package for common utility methods and widgets.
 
-# Screenshots:
 
-![Screenshot 1](s1.png)
-![Screenshot 2](s2.png)
-![Screenshot 3](s3.png)
-![Screenshot 4](s4.png)
-![Screenshot 5](s5.png)
 
-# Gameplay Video On Google Drive:
-[Gameplay Video](https://drive.google.com/file/d/1l2y-fy7YMc7H8UaOGIPVWYfgTGFzPOn1/view?usp=sharing)
 
-[![Watch the video](https://raw.githubusercontent.com/eamon831/journey_towrds_the_deep/s6.png)](https://raw.githubusercontent.com/eamon831/journey_towrds_the_deep/main/gameplay.mp4)
+
