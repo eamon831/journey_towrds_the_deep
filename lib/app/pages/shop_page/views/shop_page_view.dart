@@ -82,17 +82,20 @@ class ShopPageView extends BaseView<ShopPageController> {
                 bottom: 16,
                 child: Row(
                   children: [
+                    if (controller.methaneCount.value != null)
+                      _countViews(
+                        label: 'Methane',
+                        value: controller.methaneCount.value.toString(),
+                      ),
                     if (controller.hydrogenSulfideCount.value != null)
-                      Text(
-                        'Hydrogen Sulfide: ${controller.hydrogenSulfideCount.value}',
+                      _countViews(
+                        label: 'Hydrogen Sulfide',
+                        value: controller.hydrogenSulfideCount.value.toString(),
                       ),
                     if (controller.ammoniaCount.value != null)
-                      Text(
-                        'Ammonia: ${controller.ammoniaCount.value}',
-                      ),
-                    if (controller.methaneCount.value != null)
-                      Text(
-                        'Methane: ${controller.methaneCount.value}',
+                      _countViews(
+                        label: 'Ammonia',
+                        value: controller.ammoniaCount.value.toString(),
                       ),
                   ],
                 ),
@@ -100,6 +103,40 @@ class ShopPageView extends BaseView<ShopPageController> {
             ],
           );
         },
+      ),
+    );
+  }
+
+  Widget _countViews({
+    required String label,
+    required String value,
+  }) {
+    return Container(
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.all(
+          Radius.circular(
+            10,
+          ),
+        ),
+      ),
+      padding: EdgeInsets.all(8),
+      margin: EdgeInsets.all(8),
+      child: Row(
+        crossAxisAlignment: centerCAA,
+        mainAxisAlignment: centerMAA,
+        children: [
+          Text(
+            label,
+            style: const TextStyle(fontWeight: FontWeight.w700),
+          ),
+          const Text(
+            ' : ',
+          ),
+          Text(
+            value,
+          ),
+        ],
       ),
     );
   }
