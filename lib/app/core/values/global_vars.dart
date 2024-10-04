@@ -32,8 +32,8 @@ var water = Resource(
   name: 'Water',
   slug: 'water',
   description:
-      'Water is a transparent, tasteless, odorless, and nearly colorless chemical substance, which is the main constituent of Earth\'s hydrosphere and the fluids of all known living organisms.',
-  image: 'assets/lottie/mountain.json',
+      "Water is a transparent, tasteless, odorless, and nearly colorless chemical substance, which is the main constituent of Earth's hydrosphere and the fluids of all known living organisms.",
+  image: 'assets/images/water_1.png',
   type: 'Liquid',
 );
 
@@ -42,7 +42,7 @@ var bacteria = Resource(
   slug: 'bacteria',
   description:
       'Bacteria are a type of biological cell. They constitute a large domain of prokaryotic microorganisms.',
-  image: 'assets/lottie/mountain.json',
+  image: 'assets/lottie/mountain.png',
   type: 'Organism',
 );
 

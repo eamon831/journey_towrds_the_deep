@@ -58,12 +58,15 @@ class BuildingView extends StatelessWidget {
               SizedBox(
                 height: 50,
                 width: 50,
-                child: Lottie.asset(
-                  'assets/lottie/methane_${building.currentLevel}.json',
-                  width: Get.width * 0.2,
-                  height: Get.height * 0.2,
-                  fit: BoxFit.cover,
-                ),
+                child: building.resource.image.contains('.json')
+                    ? Lottie.asset(
+                        'assets/lottie/methane_${building.currentLevel}.json',
+                        width: Get.width * 0.2,
+                        height: Get.height * 0.2,
+                        fit: BoxFit.cover,
+                      )
+                    : Image.asset(
+                        'assets/images/${building.resourceType}_${building.currentLevel}.png'),
               ),
             ],
           ),
