@@ -96,7 +96,7 @@ then run the project from the terminal by running the command "flutter run  lib/
 
 # Architecture and Project Structure
 # MVVM
-'''bash 
+```bash
 .
 ├── app
 │   ├── bindings
@@ -206,7 +206,7 @@ then run the project from the terminal by running the command "flutter run  lib/
 │   └── app_en.arb
 ├── main_dev.dart
 └── main_prod.dart
-'''
+```
 ## State Management
 
 This project uses **GetX** for state management. The relevant files are located in the `lib/app/core/base` directory:
