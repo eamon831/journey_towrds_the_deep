@@ -37,17 +37,30 @@ class ShopPageView extends BaseView<ShopPageController> {
                   return InkWell(
                     onTap: () => controller.purchaseBuilding(building),
                     child: Container(
-                   //   height: 100,
-                      width: 100,
+                      //   height: 100,
+                      //width: 100,
                       decoration: BoxDecoration(
                         color: building.isPurchased
                             ? AppColors.grey
                             : AppColors.red,
                         borderRadius: BorderRadius.circular(10),
                       ),
+                      padding: const EdgeInsets.all(8),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          SizedBox(
+                            height: 50,
+                            width: 50,
+                            child: building.image.contains('.json')
+                                ? Lottie.asset(
+                                    building.image,
+                                    width: Get.width * 0.2,
+                                    height: Get.height * 0.2,
+                                    fit: BoxFit.cover,
+                                  )
+                                : Image.asset(building.image),
+                          ),
                           Text(
                             building.name,
                             style: boldTextStyle(color: AppColors.white),

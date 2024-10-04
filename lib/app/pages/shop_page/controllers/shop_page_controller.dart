@@ -12,7 +12,6 @@ class PurchaseAbleBuilding {
   final int price;
   final String image;
   final bool isPurchased;
-  final VoidCallback? onTap;
   Map<Resource, int>? buyRequirements;
   ResourceBuilding? resourceBuilding;
 
@@ -22,7 +21,6 @@ class PurchaseAbleBuilding {
     required this.image,
     required this.isPurchased,
     this.buyRequirements,
-    this.onTap,
     this.resourceBuilding,
   });
 
@@ -43,7 +41,7 @@ class PurchaseAbleBuilding {
             key.slug,
           ],
         );
-        if(data.isEmpty) {
+        if (data.isEmpty) {
           return false;
         }
 
@@ -121,7 +119,7 @@ class ShopPageController extends BaseController {
       PurchaseAbleBuilding(
         name: 'Sulfur Building',
         price: 100,
-        image: 'assets/images/building_1.png',
+        image: 'assets/lottie/methane_1.json',
         isPurchased: await dbHelper.getAllWhr(
           tbl: tableBuildings,
           where: 'resource_type = ?',
@@ -144,30 +142,11 @@ class ShopPageController extends BaseController {
           },
           currentCount: 0,
         ),
-        onTap: () async {
-          // Check if the building can be purchased
-          final alreadyPurchased = await prefs.getBool(prefHasHydrogenSulfide);
-          if (alreadyPurchased) {
-            toast('You already have this building');
-            return;
-          }
-
-          final confirmation = await confirmationModal(
-            msg: 'Do you want to buy this building?',
-          );
-          if (confirmation) {
-            // Do something
-            await prefs.setBool(
-              key: prefHasHydrogenSulfide,
-              value: true,
-            );
-          }
-        },
       ),
       PurchaseAbleBuilding(
         name: 'Ammonia Building',
         price: 200,
-        image: 'assets/images/building_2.png',
+        image: 'assets/lottie/methane_1.json',
         isPurchased: await dbHelper.getAllWhr(
           tbl: tableBuildings,
           where: 'resource_type = ?',
@@ -192,30 +171,11 @@ class ShopPageController extends BaseController {
           },
           currentCount: 0,
         ),
-        onTap: () async {
-          // Check if the building can be purchased
-          final alreadyPurchased = await prefs.getBool(prefHasAmmonia);
-          if (alreadyPurchased) {
-            toast('You already have this building');
-            return;
-          }
-
-          final confirmation = await confirmationModal(
-            msg: 'Do you want to buy this building?',
-          );
-          if (confirmation) {
-            // Do something
-            await prefs.setBool(
-              key: prefHasAmmonia,
-              value: true,
-            );
-          }
-        },
       ),
       PurchaseAbleBuilding(
         name: 'Water Purification Building',
         price: 200,
-        image: 'assets/images/building_2.png',
+        image: 'assets/images/water_1.png',
         isPurchased: await dbHelper.getAllWhr(
           tbl: tableBuildings,
           where: 'resource_type = ?',
@@ -242,7 +202,6 @@ class ShopPageController extends BaseController {
           },
           currentCount: 0,
         ),
-        onTap: () async {},
       ),
     ];
   }
