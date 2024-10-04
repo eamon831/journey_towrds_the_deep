@@ -1,8 +1,8 @@
 
 
-Journey Towards The Deep
-A Strategy Game for NASA Space Apps Challenge 2024
-Description:
+### Journey Towards The Deep
+##A Strategy Game for NASA Space Apps Challenge 2024
+#Description:
 Journey Towards The Deep is a strategy game set on a distant planet where the Sun never shines. In this harsh environment, life depends on chemosynthesis—the process of using chemical reactions to produce energy. Your objective is to build a self-sustaining ecosystem by gathering resources, evolving creatures, and expanding your environment. From methane volcanoes to thriving fish ponds, manage resources wisely to ensure survival.
 
 Game Concept
