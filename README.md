@@ -12,16 +12,20 @@ Journey Towards The Deep is a strategy game set on a distant planet where the Su
 A world without sunlight requires innovation. Start small, with a methane volcano as your base, and expand by unlocking and upgrading new elements. As you gather more resources, you can purchase more advanced structures and lifeforms, evolving them to adapt to the darkness.
 
 # Screenshots:
-
+![Screenshot 5](s5.png)
 ![Screenshot 1](s1.png)
 ![Screenshot 2](s2.png)
 ![Screenshot 3](s3.png)
 ![Screenshot 4](s4.png)
-![Screenshot 5](s5.png)
 
 # Gameplay Video On Google Drive:
 [Gameplay Video](https://drive.google.com/file/d/1l2y-fy7YMc7H8UaOGIPVWYfgTGFzPOn1/view?usp=sharing)
 
+# Team Space Survivors
+## Team Leader: Mohammed Hasan
+## App Developer: Md. Saiful Hossain
+## Researcher: Afia saiara and Mohammed Hasan
+## Level Designer: Gazi Shaharabi Anwar Tuhin and Shuvo Nath
 
 # Core Mechanics
 ## Resource Management
