@@ -76,4 +76,11 @@ MVVM
 
 # Screenshots:
 
-![Screenshot 1](Simulator Screenshot - iPad Air 13-inch (M2) - 2024-10-04 at 18.28.44.png)
+![Screenshot 1](s1.png)
+![Screenshot 2](s2.png)
+![Screenshot 3](s3.png)
+![Screenshot 4](s4.png)
+![Screenshot 5](s5.png)
+![Screenshot 6](s6.png)
+
+# Video
