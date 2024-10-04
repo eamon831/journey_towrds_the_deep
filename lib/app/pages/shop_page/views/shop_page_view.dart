@@ -30,6 +30,14 @@ class ShopPageView extends BaseView<ShopPageController> {
                   ),
                 ),
               ),
+              Positioned(
+                top: 16,
+                left: 16,
+                child: IconButton(
+                  icon: const Icon(Icons.arrow_back, color: AppColors.white),
+                  onPressed: Get.back,
+                ),
+              ),
               HorizontalList(
                 itemCount: controller.buildingList.value?.length ?? 0,
                 itemBuilder: (context, index) {

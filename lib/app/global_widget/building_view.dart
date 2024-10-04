@@ -49,6 +49,9 @@ class BuildingView extends StatelessWidget {
                       )
                     : Image.asset(
                         'assets/images/${building.resourceType}_$currentLevel.png',
+                        width: Get.width * 0.2,
+                        height: Get.height * 0.2,
+                        fit: BoxFit.contain,
                       ),
               ),
               Text(

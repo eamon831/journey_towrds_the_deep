@@ -185,6 +185,8 @@ class PlanetView extends BaseView<PlanetController> {
                     right: 10,
                     child: Column(
                       children: [
+
+
                         IconTextButton(
                           text: 'Shop',
                           icon: Icons.add,

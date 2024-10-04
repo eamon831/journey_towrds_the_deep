@@ -28,7 +28,9 @@ class IconTextButton extends StatelessWidget {
             width: 2,
           ),
         ),
-        padding: const EdgeInsets.all(6),
+        padding: const EdgeInsets.all(
+          10,
+        ),
         child: Column(
           children: [
             Icon(
