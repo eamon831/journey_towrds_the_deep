@@ -89,7 +89,10 @@ simply clone the project and run "flutter pub get" in the terminal on the root p
 then run the project from the terminal by running the command "flutter run  lib/main_dev.dart or flutter run  lib/main_prod.dart"
 
 # Technologies:
-dart,sqflite,flutter
+1. Flutter
+2. Dart
+3. sqflite
+4. getx
 
 # Architecture:
 MVVM
