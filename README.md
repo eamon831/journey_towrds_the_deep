@@ -98,4 +98,4 @@ This project uses **GetX** for state management. The relevant files are located 
 # Gameplay Video On Google Drive:
 [Gameplay Video](https://drive.google.com/file/d/1l2y-fy7YMc7H8UaOGIPVWYfgTGFzPOn1/view?usp=sharing)
 
-[![Watch the video](https://raw.githubusercontent.com/eamon831/journey_towrds_the_deep/main/path/to/s6.png)](https://raw.githubusercontent.com/eamon831/journey_towrds_the_deep/main/gameplay.mp4)
+[![Watch the video](https://raw.githubusercontent.com/eamon831/journey_towrds_the_deep/s6.png)](https://raw.githubusercontent.com/eamon831/journey_towrds_the_deep/main/gameplay.mp4)
