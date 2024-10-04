@@ -21,6 +21,8 @@ class PlanetController extends BaseController {
 
     await _initWaterBuilding();
 
+    await _initBacteriaPond();
+
     methaneBuilding.refresh();
   }
 
@@ -89,6 +91,38 @@ class PlanetController extends BaseController {
         waterBuildingData[0],
       );
       water = waterBuilding.value!.resource;
+    }
+  }
+
+  Future<void> _initBacteriaPond() async {
+    final bacteriaPondData = await dbHelper.getAllWhr(
+      tbl: tableBuildings,
+      where: 'resource_type = ?',
+      whereArgs: [
+        'bacteria',
+      ],
+    );
+    if (bacteriaPondData.isNotEmpty) {
+      bacteriaPond.value = ResourceBuilding.fromJson(
+        bacteriaPondData[0],
+      );
+      bacteria = bacteriaPond.value!.resource;
+    }
+  }
+
+  Future<void> _initFishPond() async {
+    final fishPondData = await dbHelper.getAllWhr(
+      tbl: tableBuildings,
+      where: 'resource_type = ?',
+      whereArgs: [
+        'fish',
+      ],
+    );
+    if (fishPondData.isNotEmpty) {
+      fishPond.value = ResourceBuilding.fromJson(
+        fishPondData[0],
+      );
+      fish = fishPond.value!.resource;
     }
   }
 

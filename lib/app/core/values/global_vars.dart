@@ -46,6 +46,15 @@ var bacteria = Resource(
   type: 'Organism',
 );
 
+var fish = Resource(
+  name: 'Fish',
+  slug: 'fish',
+  description:
+      'Fish are gill-bearing aquatic craniate animals that lack limbs with digits.',
+  image: 'assets/lottie/mountain.png',
+  type: 'Organism',
+);
+
 final methaneBuilding = Rx<ResourceBuilding?>(
   ResourceBuilding(
     resource: methane,

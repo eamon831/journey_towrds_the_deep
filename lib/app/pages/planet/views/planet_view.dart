@@ -86,6 +86,20 @@ class PlanetView extends BaseView<PlanetController> {
                         building: ammoniaBuilding.value!,
                       ),
                     ),
+
+                  if (bacteriaPond.value != null)
+                    Positioned(
+                      bottom: 10,
+                      child: BuildingView(
+                        onTap: () => controller.upgradeObject(
+                          building: bacteriaPond,
+                        ),
+                        onDoubleTap: () => controller.produceResource(
+                          building: bacteriaPond,
+                        ),
+                        building: bacteriaPond.value!,
+                      ),
+                    ),
                   if (waterBuilding.value != null)
                     Positioned(
                       bottom: 15,

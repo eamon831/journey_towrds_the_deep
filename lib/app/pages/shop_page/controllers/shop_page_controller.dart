@@ -173,6 +173,69 @@ class ShopPageController extends BaseController {
         ),
       ),
       PurchaseAbleBuilding(
+        name: 'Bacteria Pond',
+        price: 200,
+        image: 'assets/images/bacteria_1.png',
+        isPurchased: await dbHelper.getAllWhr(
+          tbl: tableBuildings,
+          where: 'resource_type = ?',
+          whereArgs: [
+            bacteria.slug,
+          ],
+        ).then(
+          (value) {
+            return value.isNotEmpty;
+          },
+        ),
+        buyRequirements: {
+          methane: 20,
+          hydrogenSulfide: 10,
+          ammonia: 30,
+        },
+        resourceBuilding: ResourceBuilding(
+          resource: bacteria,
+          resourceType: bacteria.slug,
+          upgradeRequirements: {
+            methane: 20,
+            hydrogenSulfide: 10,
+            ammonia: 30,
+          },
+          currentCount: 0,
+        ),
+      ),
+      //fish pond
+      PurchaseAbleBuilding(
+        name: 'Fish Pond',
+        price: 200,
+        image: 'assets/images/fish_1.png',
+        isPurchased: await dbHelper.getAllWhr(
+          tbl: tableBuildings,
+          where: 'resource_type = ?',
+          whereArgs: [
+            fish.slug,
+          ],
+        ).then(
+          (value) {
+            return value.isNotEmpty;
+          },
+        ),
+        buyRequirements: {
+          methane: 20,
+          hydrogenSulfide: 10,
+          ammonia: 30,
+        },
+        resourceBuilding: ResourceBuilding(
+          resource: fish,
+          resourceType: fish.slug,
+          upgradeRequirements: {
+            methane: 20,
+            hydrogenSulfide: 10,
+            ammonia: 30,
+          },
+          currentCount: 0,
+        ),
+      ),
+      PurchaseAbleBuilding(
         name: 'Water Purification Building',
         price: 200,
         image: 'assets/images/water_1.png',
