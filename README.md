@@ -103,6 +103,12 @@ This project uses **GetX** for state management. The relevant files are located 
 - **[get](https://pub.dev/packages/get)**: State management library for Flutter with a focus on simplicity and performance.
 - **[nb_utils](https://pub.dev/packages/nb_utils)**: A package for common utility methods and widgets.
 
+# Play Now
+Embark on your Journey Towards The Deep today and experience the thrill of building a self-sustaining ecosystem in a world without sunlight.
+
+# Feedback and Support
+We value your feedback! If you have any questions, suggestions, or encounter any issues while playing Journey Towards The Deep, please reach out to us. Your input helps us improve the game and provide a better gaming experience.
+
 
 
 
