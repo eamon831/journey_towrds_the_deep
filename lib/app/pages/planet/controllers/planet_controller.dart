@@ -23,6 +23,8 @@ class PlanetController extends BaseController {
 
     await _initBacteriaPond();
 
+    await _initFishPond();
+
     methaneBuilding.refresh();
   }
 

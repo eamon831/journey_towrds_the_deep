@@ -22,7 +22,7 @@ class BuildingView extends StatelessWidget {
         // height: 100,
         //  width: 100,
         decoration: BoxDecoration(
-          color: AppColors.red,
+          color: Colors.transparent,
           borderRadius: BorderRadius.circular(
             20,
           ),
