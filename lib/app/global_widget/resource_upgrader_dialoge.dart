@@ -34,6 +34,20 @@ class ResourceUpgraderDialoge extends StatelessWidget {
                   mainAxisAlignment: startMAA,
                   crossAxisAlignment: startCAA,
                   children: [
+                    Text(
+                      'Current Production : ${building.productionRate.toString()} ',
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    Text(
+                      'Current Leve : ${building.currentLevel.toString()} ',
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
                     const Text(
                       'Next Upgrade Cost',
                       style: TextStyle(
