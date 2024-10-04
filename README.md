@@ -8,11 +8,11 @@
 
 Journey Towards The Deep is a strategy game set on a distant planet where the Sun never shines. In this harsh environment, life depends on chemosynthesis—the process of using chemical reactions to produce energy. Your objective is to build a self-sustaining ecosystem by gathering resources, evolving creatures, and expanding your environment. From methane volcanoes to thriving fish ponds, manage resources wisely to ensure survival.
 
-Game Concept
+# Game Concept
 A world without sunlight requires innovation. Start small, with a methane volcano as your base, and expand by unlocking and upgrading new elements. As you gather more resources, you can purchase more advanced structures and lifeforms, evolving them to adapt to the darkness.
 
-Core Mechanics
-Resource Management
+# Core Mechanics
+## Resource Management
 
 Each element you unlock produces a specific resource (e.g., methane, hydrogen sulfide, ammonia).
 These resources are used to purchase and upgrade additional elements.
