@@ -48,7 +48,7 @@ class PlanetView extends BaseView<PlanetController> {
                   if (methaneBuilding.value != null)
                     Positioned(
                       left: 10,
-                      top: 250,
+                      bottom: 40,
                       child: BuildingView(
                         onTap: () => controller.upgradeObject(
                           building: methaneBuilding,
@@ -61,8 +61,8 @@ class PlanetView extends BaseView<PlanetController> {
                     ),
                   if (hydrogenSulfideBuilding.value != null)
                     Positioned(
-                      left: 200,
-                      bottom: 60,
+                      left: 260,
+                      bottom: 40,
                       child: BuildingView(
                         onTap: () => controller.upgradeObject(
                           building: hydrogenSulfideBuilding,
@@ -75,7 +75,8 @@ class PlanetView extends BaseView<PlanetController> {
                     ),
                   if (ammoniaBuilding.value != null)
                     Positioned(
-                      bottom: 10,
+                      bottom: 0,
+                      left: 190,
                       child: BuildingView(
                         onTap: () => controller.upgradeObject(
                           building: ammoniaBuilding,
@@ -86,11 +87,10 @@ class PlanetView extends BaseView<PlanetController> {
                         building: ammoniaBuilding.value!,
                       ),
                     ),
-
                   if (bacteriaPond.value != null)
                     Positioned(
-                      bottom: 20,
-                      right: 200,
+                      bottom: 10,
+                      right: 210,
                       child: BuildingView(
                         onTap: () => controller.upgradeObject(
                           building: bacteriaPond,
@@ -99,6 +99,20 @@ class PlanetView extends BaseView<PlanetController> {
                           building: bacteriaPond,
                         ),
                         building: bacteriaPond.value!,
+                      ),
+                    ),
+                  if (fishPond.value != null)
+                    Positioned(
+                      bottom: 5,
+                       left: 410,
+                      child: BuildingView(
+                        onTap: () => controller.upgradeObject(
+                          building: fishPond,
+                        ),
+                        onDoubleTap: () => controller.produceResource(
+                          building: fishPond,
+                        ),
+                        building: fishPond.value!,
                       ),
                     ),
                   if (waterBuilding.value != null)
@@ -115,23 +129,7 @@ class PlanetView extends BaseView<PlanetController> {
                         building: waterBuilding.value!,
                       ),
                     ),
-
-                  if(fishPond.value != null)
-                    Positioned(
-                      bottom: 60,
-                     // left: 200,
-                      child: BuildingView(
-                        onTap: () => controller.upgradeObject(
-                          building: fishPond,
-                        ),
-                        onDoubleTap: () => controller.produceResource(
-                          building: fishPond,
-                        ),
-                        building: fishPond.value!,
-                      ),
-                    ),
-
-                  if (kDebugMode)
+                  if (false)
                     Positioned(
                       // Example positioning
                       top: 30, // Adjust these values as needed
@@ -169,14 +167,14 @@ class PlanetView extends BaseView<PlanetController> {
                             title: 'Water',
                             count: waterBuilding.value!.currentCount.toString(),
                           ),
-                        if(bacteriaPond.value != null)
+                        if (bacteriaPond.value != null)
                           CountView(
-                            title: 'Bacteria Pond',
+                            title: 'Bacteria  ',
                             count: bacteriaPond.value!.currentCount.toString(),
                           ),
-                        if(fishPond.value != null)
+                        if (fishPond.value != null)
                           CountView(
-                            title: 'Fish Pond',
+                            title: 'Fish',
                             count: fishPond.value!.currentCount.toString(),
                           ),
                       ],
@@ -199,7 +197,6 @@ class PlanetView extends BaseView<PlanetController> {
               ),
             ],
           );
-
         },
       ),
     );

@@ -9,6 +9,10 @@ import '/app/entity/resource_building.dart';
 // ResourceBuilding class that manages resource generation and upgrades
 
 class PlanetController extends BaseController {
+
+  final bottomPosition = 60.0;
+  final yPosition = 60;
+
   @override
   Future<void> onInit() async {
     super.onInit();

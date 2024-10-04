@@ -18,7 +18,7 @@ class ResourceBuilding {
     required this.resourceType,
     this.productionRate = 10, // Default production rate per time unit
     this.currentLevel = 1,
-    this.maxLevel = 5,
+    this.maxLevel = 15,
     Map<Resource, int>? upgradeRequirements,
     required this.currentCount,
   }) : upgradeRequirements = upgradeRequirements ?? {};

@@ -15,6 +15,7 @@ class BuildingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currentLevel = building.currentLevel > 5 ? 5 : building.currentLevel;
     return InkWell(
       onTap: onTap,
       onDoubleTap: onDoubleTap,
@@ -31,42 +32,33 @@ class BuildingView extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              /*  Text(
-                'Name  ${building.resource.name}',
-                style: const TextStyle(
-                  color: AppColors.white,
-                ),
-              ),
-              Text(
-                'Level ${building.currentLevel}',
-                style: const TextStyle(
-                  color: AppColors.white,
-                ),
-              ),
-              Text(
-                'Production Rate ${building.productionRate}',
-                style: const TextStyle(
-                  color: AppColors.white,
-                ),
-              ),
-              Text(
-                'Next Upgrade Cost ${building.upgradeRequirements.map((key, value) => MapEntry(key.name, value))}',
-                style: const TextStyle(
-                  color: AppColors.white,
-                ),
-              ),*/
               SizedBox(
                 height: 50,
                 width: 50,
                 child: building.resource.image.contains('.json')
                     ? Lottie.asset(
-                        'assets/lottie/methane_${building.currentLevel}.json',
+                        'assets/lottie/methane_$currentLevel.json',
                         width: Get.width * 0.2,
                         height: Get.height * 0.2,
                         fit: BoxFit.cover,
                       )
                     : Image.asset(
-                        'assets/images/${building.resourceType}_${building.currentLevel}.png'),
+                        'assets/images/${building.resourceType}_$currentLevel.png',
+                      ),
+              ),
+              Text(
+                'Name :${building.resource.name}',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 10,
+                ),
+              ),
+              Text(
+                'Level :${building.currentLevel}',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 10,
+                ),
               ),
             ],
           ),
