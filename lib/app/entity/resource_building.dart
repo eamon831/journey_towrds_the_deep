@@ -97,6 +97,7 @@ class ResourceBuilding {
           key.slug,
         ],
       );
+      if(data.isEmpty) return false;
 
       if (data[0]['current_count'] < upgradeRequirements[key]!) {
         return false;

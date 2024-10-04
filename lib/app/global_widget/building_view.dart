@@ -1,4 +1,3 @@
-
 import '/app/entity/resource_building.dart';
 
 import '/app/core/exporter.dart';
@@ -21,8 +20,8 @@ class BuildingView extends StatelessWidget {
       onTap: onTap,
       onDoubleTap: onDoubleTap,
       child: Container(
-       // height: 100,
-      //  width: 100,
+        // height: 100,
+        //  width: 100,
         decoration: BoxDecoration(
           color: AppColors.red,
           borderRadius: BorderRadius.circular(
@@ -33,8 +32,8 @@ class BuildingView extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              Text(
-               'Name  ${building.resource.name}',
+              /*Text(
+                'Name  ${building.resource.name}',
                 style: const TextStyle(
                   color: AppColors.white,
                 ),
@@ -50,25 +49,27 @@ class BuildingView extends StatelessWidget {
                 style: const TextStyle(
                   color: AppColors.white,
                 ),
-              ),
+              ),*/
               Text(
                 'Next Upgrade Cost ${building.upgradeRequirements.map((key, value) => MapEntry(key.name, value))}',
                 style: const TextStyle(
                   color: AppColors.white,
                 ),
               ),
+              SizedBox(
+                height: 50,
+                width: 50,
+                child: Lottie.asset(
+                  'assets/lottie/${building.resource.slug}_${building.currentLevel}.json',
+                  width: Get.width * 0.2,
+                  height: Get.height * 0.2,
+                  fit: BoxFit.cover,
+                ),
+              ),
             ],
           ),
         ),
       ),
-/*
-                      child: Lottie.asset(
-                        'assets/lottie/mountain.json',
-                        width: Get.width * 0.2,
-                        height: Get.height * 0.2,
-                        fit: BoxFit.cover,
-                      ),
-*/
     );
   }
 }

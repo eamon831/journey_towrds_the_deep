@@ -1,4 +1,3 @@
-import '/app/bindings/initial_binding.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '/app/core/exporter.dart';

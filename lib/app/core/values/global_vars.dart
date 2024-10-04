@@ -10,6 +10,7 @@ var methane = Resource(
   type: 'Gas',
 );
 
+
 var hydrogenSulfide = Resource(
   name: 'Hydrogen Sulfide',
   slug: 'hydrogen-sulfide',
