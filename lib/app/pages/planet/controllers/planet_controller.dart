@@ -99,27 +99,25 @@ class PlanetController extends BaseController {
     Get.dialog(
       ResourceUpgraderDialoge(
         object: building.value!.resource,
+        building: building.value!,
         onUpgrade: () async {
-          final confirmation = await confirmationModal(
-            msg:
-                'Are you sure you want to upgrade ${building.value!.resource.name} building?',
-          );
-          if (confirmation) {
-            if (await building.value!.upgradeBuilding()) {
+          if (await building.value!.upgradeBuilding()) {
+            final confirmation = await confirmationModal(
+              msg:
+                  'Are you sure you want to upgrade ${building.value!.resource.name} building?',
+            );
+            if (confirmation) {
               await insertBuilding(
                 building: building,
               );
               await onInit();
               building.refresh();
-
-              // deduct from db
-
               Get.back();
-            } else {
-              toast(
-                'Not enough resources to upgrade ${building.value!.resource.name} building.',
-              );
             }
+          } else {
+            toast(
+              'Not enough resources to upgrade ${building.value!.resource.name} building.',
+            );
           }
         },
       ),

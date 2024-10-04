@@ -23,8 +23,12 @@ class IconTextButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(
             8,
           ),
+          border: Border.all(
+            color: AppColors.green,
+            width: 2,
+          ),
         ),
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(6),
         child: Column(
           children: [
             Icon(

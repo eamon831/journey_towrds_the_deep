@@ -50,7 +50,7 @@ Future<bool> confirmationModal({
                       child: const Text(
                         'No',
                         style: TextStyle(
-                          color: Colors.teal,
+                          color: Colors.white,
                         ),
                       ),
                     ),

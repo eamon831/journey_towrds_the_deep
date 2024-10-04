@@ -1,3 +1,4 @@
+import 'package:getx_template/app/entity/resource_building.dart';
 
 import '/app/entity/resource.dart';
 
@@ -6,9 +7,11 @@ import '/app/core/exporter.dart';
 class ResourceUpgraderDialoge extends StatelessWidget {
   final Resource object;
   final VoidCallback onUpgrade;
+  final ResourceBuilding building;
   const ResourceUpgraderDialoge({
     required this.object,
     required this.onUpgrade,
+    required this.building,
     super.key,
   });
 
@@ -21,28 +24,44 @@ class ResourceUpgraderDialoge extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         child: Column(
           children: [
-            Text(object.description),
-            Container(
-              height: 60,
-              width: 60,
-              decoration: BoxDecoration(
-                color: AppColors.red,
-                borderRadius: BorderRadius.circular(
-                  30,
-                ),
-              ),
-              child: Lottie.asset(
-                object.image,
-                width: Get.width * 0.05,
-                height: Get.height * 0.05,
-                fit: BoxFit.cover,
-              ),
-            ),
+            Text(object.description +
+                object.description +
+                object.description +
+                object.description),
             // upgrade button
-            ElevatedButton(
-              onPressed: onUpgrade,
-              child: const Text('Upgrade'),
-            ),
+
+            Row(
+              mainAxisAlignment: spaceBetweenMAA,
+              children: [
+                Column(
+                  mainAxisAlignment: startMAA,
+                  crossAxisAlignment: startCAA,
+                  children: [
+                    const Text(
+                      'Next Upgrade Cost',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    Wrap(
+                      children: building.upgradeRequirements.entries.map(
+                        (entry) {
+                          return Chip(
+                            label: Text('${entry.key.name}: ${entry.value}'),
+                          );
+                        },
+                      ).toList(),
+                    ),
+                  ],
+                ),
+                IconTextButton(
+                  onTap: onUpgrade,
+                  text: 'Upgrade',
+                  icon: TablerIcons.hammer,
+                ),
+              ],
+            )
           ],
         ),
       ),
