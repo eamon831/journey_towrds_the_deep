@@ -4,7 +4,7 @@
 
 # For change the package name, run the command below:
 ```bash
-dart run change_app_package_name:main "com.saiful.jttd"
+dart run change_app_package_name:main "com.nasa.jttd"
 ```
 
 # For change the app name, run the command below:

@@ -1,6 +1,8 @@
 import '/app/core/exporter.dart';
 import '/app/entity/resource_building.dart';
 
+final audioPlayer = AudioPlayerSingleton();
+
 class BuildingView extends StatelessWidget {
   final VoidCallback onTap;
   final VoidCallback onDoubleTap;
@@ -18,7 +20,10 @@ class BuildingView extends StatelessWidget {
     final currentLevel = building.currentLevel > 5 ? 5 : building.currentLevel;
     return InkWell(
       onTap: onTap,
-      onDoubleTap: onDoubleTap,
+      onDoubleTap: () async {
+        onDoubleTap.call();
+        await audioPlayer.playBeepSound();
+      },
       child: Container(
         // height: 100,
         //  width: 100,

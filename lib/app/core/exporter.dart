@@ -18,6 +18,7 @@ export '/flavors/build_config.dart';
 //core
 export 'base/base_controller.dart';
 export 'base/base_view.dart';
+export 'core_model/audio_player_singleton.dart';
 // db helper
 export 'db_helper/db_helper.dart';
 // session manager

@@ -1,4 +1,4 @@
-package com.saiful.jttd
+package com.nasa.jttd
 
 import io.flutter.embedding.android.FlutterActivity
 

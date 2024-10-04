@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 // Not Exactly a Vector, Just to keep the x and y values
 class PVector {
-  double? x;
-  double? y;
+  num? x;
+  num? y;
 
   PVector(this.x, this.y);
 }
