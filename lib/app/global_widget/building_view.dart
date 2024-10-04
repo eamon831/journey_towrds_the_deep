@@ -38,8 +38,8 @@ class BuildingView extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(
-                height: 50,
-                width: 50,
+                height: Get.height * 0.2,
+                width: Get.width * 0.2,
                 child: building.resource.image.contains('.json')
                     ? Lottie.asset(
                         'assets/lottie/methane_$currentLevel.json',

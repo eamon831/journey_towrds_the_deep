@@ -1,12 +1,9 @@
 import 'package:get/get.dart';
-import '/app/pages/shop_page/bindings/shop_page_binding.dart';
-import '/app/pages/shop_page/views/shop_page_view.dart';
 
 import '/app/pages/planet/bindings/planet_binding.dart';
 import '/app/pages/planet/views/planet_view.dart';
-
-import '/app/pages/home/bindings/home_binding.dart';
-import '/app/pages/home/views/home_view.dart';
+import '/app/pages/shop_page/bindings/shop_page_binding.dart';
+import '/app/pages/shop_page/views/shop_page_view.dart';
 import '/app/pages/splash_page/bindings/splash_page_binding.dart';
 import '/app/pages/splash_page/views/splash_page_view.dart';
 
@@ -22,11 +19,6 @@ class AppPages {
       name: Routes.splashPage,
       page: SplashPageView.new,
       binding: SplashPageBinding(),
-    ),
-    GetPage(
-      name: Routes.home,
-      page: HomeView.new,
-      binding: HomeBinding(),
     ),
     GetPage(
       name: Routes.planet,
