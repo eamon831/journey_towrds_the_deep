@@ -95,4 +95,5 @@ This project uses **GetX** for state management. The relevant files are located 
 ![Screenshot 4](s4.png)
 ![Screenshot 5](s5.png)
 
-# Video
+# Gameplay Video
+[Gameplay Video](https://drive.google.com/file/d/1Q6J9)
