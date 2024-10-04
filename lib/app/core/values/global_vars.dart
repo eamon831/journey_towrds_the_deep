@@ -63,4 +63,5 @@ final ammoniaBuilding = Rx<ResourceBuilding?>(null);
 
 final waterBuilding = Rx<ResourceBuilding?>(null);
 
-final bacteriaBuilding = Rx<ResourceBuilding?>(null);
+final bacteriaPond = Rx<ResourceBuilding?>(null);
+final fishPond = Rx<ResourceBuilding?>(null);

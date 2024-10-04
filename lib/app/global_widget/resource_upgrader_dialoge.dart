@@ -24,10 +24,7 @@ class ResourceUpgraderDialoge extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         child: Column(
           children: [
-            Text(object.description +
-                object.description +
-                object.description +
-                object.description),
+            Text(object.description),
             // upgrade button
 
             Row(
