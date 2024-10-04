@@ -43,6 +43,9 @@ class PurchaseAbleBuilding {
             key.slug,
           ],
         );
+        if(data.isEmpty) {
+          return false;
+        }
 
         if (data[0]['current_count'] < buyRequirements![key]!) {
           return false;
@@ -95,7 +98,7 @@ class PurchaseAbleBuilding {
 
 class ShopPageController extends BaseController {
   final buildingList = Rx<List<PurchaseAbleBuilding>?>(null);
-  final methaneCount = Rx<num>(methaneBuilding.value.currentCount);
+  final methaneCount = Rx<num>(methaneBuilding.value!.currentCount);
   final hydrogenSulfideCount =
       Rx<num?>(hydrogenSulfideBuilding.value?.currentCount);
   final ammoniaCount = Rx<num?>(ammoniaBuilding.value?.currentCount);

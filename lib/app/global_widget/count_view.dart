@@ -22,7 +22,7 @@ class CountView extends StatelessWidget {
         ),
         const SizedBox(width: 8),
         Container(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.all(4),
           margin: const EdgeInsets.only(bottom: 8),
           decoration: BoxDecoration(
             color: Colors.transparent,
@@ -38,7 +38,7 @@ class CountView extends StatelessWidget {
                 title,
                 style: const TextStyle(
                   color: Colors.white,
-                  fontSize: 16,
+                  fontSize: 12,
                 ),
               ),
               const SizedBox(width: 8),
@@ -46,7 +46,7 @@ class CountView extends StatelessWidget {
                 ':',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 16,
+                  fontSize: 12,
                 ),
               ),
               const SizedBox(width: 8),
@@ -54,7 +54,7 @@ class CountView extends StatelessWidget {
                 count.toString(),
                 style: const TextStyle(
                   color: Colors.white,
-                  fontSize: 16,
+                  fontSize: 12,
                 ),
               ),
             ],

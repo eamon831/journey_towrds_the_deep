@@ -10,7 +10,6 @@ var methane = Resource(
   type: 'Gas',
 );
 
-
 var hydrogenSulfide = Resource(
   name: 'Hydrogen Sulfide',
   slug: 'hydrogen-sulfide',
@@ -47,14 +46,16 @@ var bacteria = Resource(
   type: 'Organism',
 );
 
-final methaneBuilding = ResourceBuilding(
-  resource: methane,
-  resourceType: 'methane',
-  upgradeRequirements: {
-    hydrogenSulfide: 30,
-  },
-  currentCount: 0,
-).obs;
+final methaneBuilding = Rx<ResourceBuilding?>(
+  ResourceBuilding(
+    resource: methane,
+    resourceType: 'methane',
+    upgradeRequirements: {
+      hydrogenSulfide: 30,
+    },
+    currentCount: 0,
+  ),
+);
 
 final hydrogenSulfideBuilding = Rx<ResourceBuilding?>(null);
 

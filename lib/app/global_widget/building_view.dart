@@ -1,6 +1,5 @@
-import '/app/entity/resource_building.dart';
-
 import '/app/core/exporter.dart';
+import '/app/entity/resource_building.dart';
 
 class BuildingView extends StatelessWidget {
   final VoidCallback onTap;
@@ -32,7 +31,7 @@ class BuildingView extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              /*Text(
+              /*  Text(
                 'Name  ${building.resource.name}',
                 style: const TextStyle(
                   color: AppColors.white,
@@ -49,18 +48,18 @@ class BuildingView extends StatelessWidget {
                 style: const TextStyle(
                   color: AppColors.white,
                 ),
-              ),*/
+              ),
               Text(
                 'Next Upgrade Cost ${building.upgradeRequirements.map((key, value) => MapEntry(key.name, value))}',
                 style: const TextStyle(
                   color: AppColors.white,
                 ),
-              ),
+              ),*/
               SizedBox(
                 height: 50,
                 width: 50,
                 child: Lottie.asset(
-                  'assets/lottie/${building.resource.slug}_${building.currentLevel}.json',
+                  'assets/lottie/methane_${building.currentLevel}.json',
                   width: Get.width * 0.2,
                   height: Get.height * 0.2,
                   fit: BoxFit.cover,

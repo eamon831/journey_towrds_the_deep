@@ -23,6 +23,143 @@ class PlanetView extends BaseView<PlanetController> {
       body: Obx(
         () {
           return Stack(
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                child: Lottie.asset(
+                  'assets/lottie/night_bg.json',
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/land.png'),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  if (methaneBuilding.value != null)
+                    Positioned(
+                      left: 10,
+                      top: 250,
+                      child: BuildingView(
+                        onTap: () => controller.upgradeObject(
+                          building: methaneBuilding,
+                        ),
+                        onDoubleTap: () => controller.produceResource(
+                          building: methaneBuilding,
+                        ),
+                        building: methaneBuilding.value!,
+                      ),
+                    ),
+                  if (hydrogenSulfideBuilding.value != null)
+                    Positioned(
+                      left: 200,
+                      bottom: 60,
+                      child: BuildingView(
+                        onTap: () => controller.upgradeObject(
+                          building: hydrogenSulfideBuilding,
+                        ),
+                        onDoubleTap: () => controller.produceResource(
+                          building: hydrogenSulfideBuilding,
+                        ),
+                        building: hydrogenSulfideBuilding.value!,
+                      ),
+                    ),
+                  if (ammoniaBuilding.value != null)
+                    Positioned(
+                      bottom: 10,
+                      child: BuildingView(
+                        onTap: () => controller.upgradeObject(
+                          building: ammoniaBuilding,
+                        ),
+                        onDoubleTap: () => controller.produceResource(
+                          building: ammoniaBuilding,
+                        ),
+                        building: ammoniaBuilding.value!,
+                      ),
+                    ),
+                  if (waterBuilding.value != null)
+                    Positioned(
+                      bottom: 15,
+                      left: 100,
+                      child: BuildingView(
+                        onTap: () => controller.upgradeObject(
+                          building: waterBuilding,
+                        ),
+                        onDoubleTap: () => controller.produceResource(
+                          building: waterBuilding,
+                        ),
+                        building: waterBuilding.value!,
+                      ),
+                    ),
+                  if (true)
+                    Positioned(
+                      // Example positioning
+                      top: 30, // Adjust these values as needed
+                      left: 20, // Adjust these values as needed
+                      child: ElevatedButton(
+                        onPressed: controller.clearBuilding,
+                        child: const Text('Clear Building'),
+                      ),
+                    ),
+                  Positioned(
+                    top: 50,
+                    right: 0,
+                    child: Column(
+                      children: [
+                        if (methaneBuilding.value != null)
+                          CountView(
+                            title: 'Methane',
+                            count:
+                                methaneBuilding.value!.currentCount.toString(),
+                          ),
+                        if (hydrogenSulfideBuilding.value != null)
+                          CountView(
+                            title: 'Hydrogen Sulfide',
+                            count: hydrogenSulfideBuilding.value!.currentCount
+                                .toString(),
+                          ),
+                        if (ammoniaBuilding.value != null)
+                          CountView(
+                            title: 'Ammonia',
+                            count:
+                                ammoniaBuilding.value!.currentCount.toString(),
+                          ),
+                        if (waterBuilding.value != null)
+                          CountView(
+                            title: 'Water',
+                            count: waterBuilding.value!.currentCount.toString(),
+                          ),
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 10,
+                    right: 10,
+                    child: Column(
+                      children: [
+                        IconTextButton(
+                          text: 'Shop',
+                          icon: Icons.add,
+                          onTap: controller.goToShop,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          );
+
+          return Stack(
             alignment: Alignment.center,
             children: [
               Container(
@@ -35,87 +172,79 @@ class PlanetView extends BaseView<PlanetController> {
                   ),
                 ),
               ),
-              Positioned(
-                // Example positioning
-                top: 30, // Adjust these values as needed
-                left: 50, // Adjust these values as needed
-                child: Row(
-                  children: [
-                    SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          BuildingView(
-                            onTap: () => controller.upgradeObject(
-                              building: methaneBuilding,
-                            ),
-                            onDoubleTap: () => controller.produceResource(
-                              building: methaneBuilding,
-                            ),
-                            building: methaneBuilding.value,
-                          ),
-                          10.height,
-                          if (hydrogenSulfideBuilding.value != null)
-                            BuildingView(
-                              onTap: () => controller.upgradeObject(
-                                building: hydrogenSulfideBuilding,
-                              ),
-                              onDoubleTap: () => controller.produceResource(
-                                building: hydrogenSulfideBuilding,
-                              ),
-                              building: hydrogenSulfideBuilding.value!,
-                            ),
-                          10.height,
-                          if (ammoniaBuilding.value != null)
-                            BuildingView(
-                              onTap: () => controller.upgradeObject(
-                                building: ammoniaBuilding,
-                              ),
-                              onDoubleTap: () => controller.produceResource(
-                                building: ammoniaBuilding,
-                              ),
-                              building: ammoniaBuilding.value!,
-                            ),
-                          if (waterBuilding.value != null)
-                            BuildingView(
-                              onTap: () => controller.upgradeObject(
-                                building: waterBuilding,
-                              ),
-                              onDoubleTap: () => controller.produceResource(
-                                building: waterBuilding,
-                              ),
-                              building: waterBuilding.value!,
-                            ),
-                        ],
-                      ),
+              if (methaneBuilding.value != null)
+                Positioned(
+                  left: 10,
+                  child: BuildingView(
+                    onTap: () => controller.upgradeObject(
+                      building: methaneBuilding,
                     ),
-                    Column(
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {},
-                          child: Text('Insert Building'),
-                        ),
-                        ElevatedButton(
-                          onPressed: controller.clearBuilding,
-                          child: Text('Clear Building'),
-                        ),
-                        ElevatedButton(
-                          onPressed: controller.buildBuilding,
-                          child: Text('Build Building'),
-                        ),
-                      ],
+                    onDoubleTap: () => controller.produceResource(
+                      building: methaneBuilding,
                     ),
-                  ],
+                    building: methaneBuilding.value!,
+                  ),
                 ),
-              ),
+              if (hydrogenSulfideBuilding.value != null)
+                Positioned(
+                  right: 10,
+                  child: BuildingView(
+                    onTap: () => controller.upgradeObject(
+                      building: hydrogenSulfideBuilding,
+                    ),
+                    onDoubleTap: () => controller.produceResource(
+                      building: hydrogenSulfideBuilding,
+                    ),
+                    building: hydrogenSulfideBuilding.value!,
+                  ),
+                ),
+              if (ammoniaBuilding.value != null)
+                Positioned(
+                  bottom: 10,
+                  child: BuildingView(
+                    onTap: () => controller.upgradeObject(
+                      building: ammoniaBuilding,
+                    ),
+                    onDoubleTap: () => controller.produceResource(
+                      building: ammoniaBuilding,
+                    ),
+                    building: ammoniaBuilding.value!,
+                  ),
+                ),
+              if (waterBuilding.value != null)
+                Positioned(
+                  bottom: 30,
+                  left: 10,
+                  child: BuildingView(
+                    onTap: () => controller.upgradeObject(
+                      building: waterBuilding,
+                    ),
+                    onDoubleTap: () => controller.produceResource(
+                      building: waterBuilding,
+                    ),
+                    building: waterBuilding.value!,
+                  ),
+                ),
+              if (true)
+                Positioned(
+                  // Example positioning
+                  top: 30, // Adjust these values as needed
+                  left: 20, // Adjust these values as needed
+                  child: ElevatedButton(
+                    onPressed: controller.clearBuilding,
+                    child: const Text('Clear Building'),
+                  ),
+                ),
               Positioned(
                 top: 50,
                 right: 0,
                 child: Column(
                   children: [
-                    CountView(
-                      title: 'Methane',
-                      count: methaneBuilding.value.currentCount.toString(),
-                    ),
+                    if (methaneBuilding.value != null)
+                      CountView(
+                        title: 'Methane',
+                        count: methaneBuilding.value!.currentCount.toString(),
+                      ),
                     if (hydrogenSulfideBuilding.value != null)
                       CountView(
                         title: 'Hydrogen Sulfide',
@@ -129,8 +258,8 @@ class PlanetView extends BaseView<PlanetController> {
                       ),
                     if (waterBuilding.value != null)
                       CountView(
-                        title: 'Ammonia',
-                        count: ammoniaBuilding.value!.currentCount.toString(),
+                        title: 'Water',
+                        count: waterBuilding.value!.currentCount.toString(),
                       ),
                   ],
                 ),

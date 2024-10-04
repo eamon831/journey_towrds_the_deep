@@ -34,12 +34,12 @@ class PlanetController extends BaseController {
     );
     if (methaneBuildingData.isNotEmpty) {
       methaneBuilding.value = ResourceBuilding.fromJson(methaneBuildingData[0]);
-      methane = methaneBuilding.value.resource;
+      methane = methaneBuilding.value!.resource;
     } else {
       await dbHelper.insertList(
         deleteBeforeInsert: false,
         tableName: tableBuildings,
-        dataList: [methaneBuilding.value.toJson()],
+        dataList: [methaneBuilding.value!.toJson()],
       );
     }
   }
@@ -147,6 +147,11 @@ class PlanetController extends BaseController {
     await dbHelper.deleteAll(
       tbl: tableBuildings,
     );
+    methaneBuilding.value = null;
+    hydrogenSulfideBuilding.value = null;
+    ammoniaBuilding.value = null;
+    waterBuilding.value = null;
+    Get.offAllNamed(Routes.splashPage);
   }
 
   Future<void> buildBuilding() async {
