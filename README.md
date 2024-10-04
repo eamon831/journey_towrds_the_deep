@@ -81,6 +81,5 @@ MVVM
 ![Screenshot 3](s3.png)
 ![Screenshot 4](s4.png)
 ![Screenshot 5](s5.png)
-![Screenshot 6](s6.png)
 
 # Video
