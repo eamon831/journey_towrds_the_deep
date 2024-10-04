@@ -62,8 +62,8 @@ Balance resource production to avoid ecosystem collapse.
 Goal of the Game
 Build a complex and self-sustaining ecosystem that thrives in complete darkness. Adapt creatures, manage resources, and evolve life on the planet to reach the highest stage of evolution.
 
-Features:
+# Features:
 
-No Sunlight Gameplay: Rely on chemical energy for survival.
-Ecosystem Evolution: Manage evolving lifeforms and expanding systems.
-Strategic Resource Management: Trade and upgrade volcanic elements to optimize resource generation.
+## No Sunlight Gameplay: Rely on chemical energy for survival.
+## Ecosystem Evolution: Manage evolving lifeforms and expanding systems.
+## Strategic Resource Management: Trade and upgrade volcanic elements to optimize resource generation.
