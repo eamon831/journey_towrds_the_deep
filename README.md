@@ -95,5 +95,7 @@ This project uses **GetX** for state management. The relevant files are located 
 ![Screenshot 4](s4.png)
 ![Screenshot 5](s5.png)
 
-# Gameplay Video
+# Gameplay Video On Google Drive:
 [Gameplay Video](https://drive.google.com/file/d/1l2y-fy7YMc7H8UaOGIPVWYfgTGFzPOn1/view?usp=sharing)
+
+# [!Watch Gameplay Video](https://drive.google.com/file/d/1l2y-fy7YMc7H8UaOGIPVWYfgTGFzPOn1/view?usp=sharing)
