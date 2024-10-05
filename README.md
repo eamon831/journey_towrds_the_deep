@@ -11,6 +11,9 @@ Journey Towards The Deep is a strategy game set on a distant planet where the Su
 # Game Concept
 A world without sunlight requires innovation. Start small, with a methane volcano as your base, and expand by unlocking and upgrading new elements. As you gather more resources, you can purchase more advanced structures and lifeforms, evolving them to adapt to the darkness.
 
+# Prototype Design
+[Prototype Link](https://www.figma.com/design/9dLH6j4TCB1ohR8fvqJqaD/NASA?node-id=0-1&t=YA69rKEo7KREp3HG-1)
+
 # Screenshots:
 ![Screenshot 5](s5.png)
 ![Screenshot 1](s1.png)
